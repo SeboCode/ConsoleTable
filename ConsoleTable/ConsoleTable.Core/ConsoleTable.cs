@@ -107,6 +107,41 @@ namespace ConsoleTable.Core
 
 	    public int ColumnCount => _table.GetLength(1);
 
+	    private int LongestElement
+	    {
+		    get
+		    {
+			    var longestElement = Header.Select(header => header.Count()).Max();
+
+			    for (var x = 0; x < RowCount; x++)
+			    {
+				    for (var y = 0; y < ColumnCount; y++)
+				    {
+					    var element = $"{_table[x, y]}".Count();
+
+					    if (longestElement < element)
+						{
+							longestElement = element;
+						}
+				    }
+			    }
+
+			    return longestElement;
+		    }
+	    }
+
+	    public void Write()
+	    {
+		    Console.WriteLine(ToString());
+	    }
+
+	    public override string ToString()
+	    {
+		    var output = string.Empty;
+
+		    return output;
+	    }
+
 		private void FillTable(T[][] table, T fillerElement, int biggestColumn)
 		{
 			for (var x = 0; x < table.Count(); x++)
