@@ -16,7 +16,15 @@ namespace ConsoleTable.Core
 				return true;
 			}
 
-			return str.AsEnumerable().All(element => element == ' ');
+            var whitespaceChars = new char[]
+            {
+                ' ',
+                '\n',
+                '\t',
+                '\r'
+            };
+
+			return str.AsEnumerable().All(element => whitespaceChars.Any(c => c == element));
 		}
 	}
 }
