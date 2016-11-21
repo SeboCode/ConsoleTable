@@ -138,8 +138,36 @@ namespace ConsoleTable.Core
 		public override string ToString()
 		{
 			var output = string.Empty;
-			var rowSeperator = new string('-', LongestElement * ColumnCount + ColumnCount + 1) + "\r\n";
+			var longestElement = LongestElement;
+			var rowSeperator = new string('-', longestElement * ColumnCount + ColumnCount + 1) + "\r\n";
+			var columnSeperator = '|';
+
+			output += Title;
+			output += "\r\n";
 			output += rowSeperator;
+
+			foreach (var header in Header)
+			{
+				output += columnSeperator;
+				output += header.PadRight(longestElement);
+			}
+
+			output += columnSeperator;
+			output += "\r\n";
+			output += rowSeperator;
+
+			for (var x = 0; x < RowCount; x++)
+			{
+				for (var y = 0; y < ColumnCount; y++)
+				{
+					output += columnSeperator;
+					output += $"{_table[x, y]}".PadRight(longestElement);
+				}
+
+				output += columnSeperator;
+				output += "\r\n";
+				output += rowSeperator;
+			}
 
 			return output;
 		}
