@@ -7,6 +7,28 @@ namespace ConsoleTable
     {
         public static void Main(string[] args)
         {
+            PrintTableWithNumbers();
+            PrintTableWithIds();
+
+            Console.ReadKey();
+        }
+
+        private static void PrintTableWithIds()
+        {
+            var data = new[,]
+            {
+                { "1", "Semper Tellus Limited", "Lorem ipsum dolor sit" },
+                { "2", "Quisque Company", "Lorem ipsum dolor sit" },
+                { "3", "Et Ultrices Posuere Associates", "Lorem ipsum dolor sit" },
+                { "4", "Lectus Cum Sociis Limited", "Lorem ipsum dolor" }
+            };
+
+            var table = new ConsoleTable<string>(data);
+            Console.WriteLine(table.ToString());
+        }
+
+        private static void PrintTableWithNumbers()
+        {
             var random = new Random();
 
             var rowCount = 3;
@@ -22,11 +44,14 @@ namespace ConsoleTable
                 }
             }
 
-            var headers = new string[] { "Column 1", "Mike", "Sandro" };
+            var matrix = new ConsoleTable<double>(
+                table,
+                title: "Maaatrix",
+                header: new[] { "Column 1", "Mike", "Sandro" },
+                sameRowLength: true
+            );
 
-            var matrix = new ConsoleTable<double>(table, "Maaatrix", headers);
             Console.WriteLine(matrix.ToString());
-            Console.ReadKey();
         }
     }
 }
