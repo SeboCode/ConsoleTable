@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace ConsoleTable.Core
 {
-    public class ConsoleTable<T>
-    {
-	    private readonly T[,] _table;
+	public class ConsoleTable<T>
+	{
+		private readonly T[,] _table;
 
-	    public T this[int row, int column]
-	    {
-		    get
+		public T this[int row, int column]
+		{
+			get
 			{
 				if (row < 0 || column < 0 || row >= RowCount || column >= ColumnCount)
 				{
@@ -17,19 +17,19 @@ namespace ConsoleTable.Core
 				}
 
 				return _table[row, column];
-		    }
-		    set
-		    {
-			    if (row < 0 || column < 0 || row >= RowCount || column >= ColumnCount)
-			    {
-				    throw new IndexOutOfRangeException(nameof(_table));
-			    }
+			}
+			set
+			{
+				if (row < 0 || column < 0 || row >= RowCount || column >= ColumnCount)
+				{
+					throw new IndexOutOfRangeException(nameof(_table));
+				}
 
-			    _table[row, column] = value;
-		    }
-	    }
+				_table[row, column] = value;
+			}
+		}
 
-	    private ConsoleTable(string title = null, string[] header = null)
+		private ConsoleTable(string title = null, string[] header = null)
 		{
 			if (title.IsEmptyOrWhiteSpace())
 			{
@@ -48,99 +48,101 @@ namespace ConsoleTable.Core
 				}
 			}
 
-			Header = header;
 			Title = title;
+			Header = header;
 		}
 
-	    public ConsoleTable(T[,] table, string title = null, string[] header = null) : this(title, header)
-	    {
-		    if (table == null)
-		    {
-			    throw new ArgumentNullException(nameof(table));
-		    }
+		public ConsoleTable(T[,] table, string title = null, string[] header = null) : this(title, header)
+		{
+			if (table == null)
+			{
+				throw new ArgumentNullException(nameof(table));
+			}
 
-		    _table = table;
-	    }
+			_table = table;
+		}
 
-	    public ConsoleTable(int row, int column, string title = null, string[] header = null) : this(title, header)
-	    {
-		    if (row < 1)
-		    {
-			    throw new ArgumentException(nameof(row));
-		    }
+		public ConsoleTable(int row, int column, string title = null, string[] header = null) : this(title, header)
+		{
+			if (row < 1)
+			{
+				throw new ArgumentException(nameof(row));
+			}
 
-		    if (column < 1)
-		    {
-			    throw new ArgumentException(nameof(column));
-		    }
+			if (column < 1)
+			{
+				throw new ArgumentException(nameof(column));
+			}
 
-		    _table = new T[row, column];
-	    }
+			_table = new T[row, column];
+		}
 
-	    public ConsoleTable(T fillerElement = default(T), string title = null, string[] header = null, params T[][] rows) : this(title, header)
-	    {
-		    if (rows == null)
-		    {
-			    throw new ArgumentNullException(nameof(rows));
-		    }
+		public ConsoleTable(T fillerElement = default(T), string title = null, string[] header = null, params T[][] rows) : this(title, header)
+		{
+			if (rows == null)
+			{
+				throw new ArgumentNullException(nameof(rows));
+			}
 
-		    if (!rows.Any())
-		    {
-			    throw new ArgumentException(nameof(rows));
-		    }
+			if (!rows.Any())
+			{
+				throw new ArgumentException(nameof(rows));
+			}
 
-		    if (!rows.First().Any())
-		    {
-			    throw new ArgumentException(nameof(rows));
-		    }
+			if (!rows.First().Any())
+			{
+				throw new ArgumentException(nameof(rows));
+			}
 
-		    var biggestColumn = rows.Select(row => row.Count()).Max();
-		    _table = new T[rows.Count(), biggestColumn];
-		    FillTable(rows, fillerElement, biggestColumn);
-	    }
+			var biggestColumn = rows.Select(row => row.Count()).Max();
+			_table = new T[rows.Count(), biggestColumn];
+			FillTable(rows, fillerElement, biggestColumn);
+		}
 
-	    public string Title { get; set; }
+		public string Title { get; set; }
 
 		public string[] Header { get; set; }
 
-	    public int RowCount => _table.GetLength(0);
+		public int RowCount => _table.GetLength(0);
 
-	    public int ColumnCount => _table.GetLength(1);
+		public int ColumnCount => _table.GetLength(1);
 
-	    private int LongestElement
-	    {
-		    get
-		    {
-			    var longestElement = Header.Select(header => header.Count()).Max();
+		private int LongestElement
+		{
+			get
+			{
+				var longestElement = Header.Select(header => header.Count()).Max();
 
-			    for (var x = 0; x < RowCount; x++)
-			    {
-				    for (var y = 0; y < ColumnCount; y++)
-				    {
-					    var element = $"{_table[x, y]}".Count();
+				for (var x = 0; x < RowCount; x++)
+				{
+					for (var y = 0; y < ColumnCount; y++)
+					{
+						var element = $"{_table[x, y]}".Count();
 
-					    if (longestElement < element)
+						if (longestElement < element)
 						{
 							longestElement = element;
 						}
-				    }
-			    }
+					}
+				}
 
-			    return longestElement;
-		    }
-	    }
+				return longestElement;
+			}
+		}
 
-	    public void Write()
-	    {
-		    Console.WriteLine(ToString());
-	    }
+		public void Write()
+		{
+			Console.WriteLine(ToString());
+		}
 
-	    public override string ToString()
-	    {
-		    var output = string.Empty;
+		public override string ToString()
+		{
+			var output = string.Empty;
+			var rowSeperator = new string('-', LongestElement * ColumnCount + ColumnCount + 1) + "\r\n";
+			output += rowSeperator;
 
-		    return output;
-	    }
+			return output;
+		}
 
 		private void FillTable(T[][] table, T fillerElement, int biggestColumn)
 		{
