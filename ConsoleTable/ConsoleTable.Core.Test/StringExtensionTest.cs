@@ -6,6 +6,36 @@ namespace ConsoleTable.Core.Test
     public class StringExtensionsTest
     {
         [TestMethod]
+        public void Test_IsNullOrEmptyOrWhiteSpace_NullString()
+        {
+            Assert.IsTrue(((string)null).IsNullOrEmptyOrWhiteSpace());
+        }
+
+        [TestMethod]
+        public void Test_IsNullOrEmptyOrWhiteSpace_EmptyString()
+        {
+            Assert.IsTrue(string.Empty.IsNullOrEmptyOrWhiteSpace());
+        }
+
+        [TestMethod]
+        public void Test_IsNullOrEmptyOrWhiteSpace_WhiteSpace()
+        {
+            Assert.IsTrue("   ".IsNullOrEmptyOrWhiteSpace());
+        }
+
+        [TestMethod]
+        public void Test_IsNullOrEmptyOrWhiteSpace_WhiteSpaceTabsAndWraps()
+        {
+            Assert.IsTrue("  \t\t\r\n\r\n \t\r\n".IsNullOrEmptyOrWhiteSpace());
+        }
+
+        [TestMethod]
+        public void Test_IsNullOrEmptyOrWhiteSpace_NonWhiteSpace()
+        {
+            Assert.IsFalse("This text is not white space.".IsNullOrEmptyOrWhiteSpace());
+        }
+
+        [TestMethod]
         public void Test_IsEmptyOrWhiteSpace_NullString()
         {
             Assert.IsFalse(((string)null).IsEmptyOrWhiteSpace());
@@ -26,7 +56,7 @@ namespace ConsoleTable.Core.Test
         [TestMethod]
         public void Test_IsEmptyOrWhiteSpace_WhiteSpaceTabsAndWraps()
         {
-            Assert.IsTrue("  \t\t\n\n \t\n".IsEmptyOrWhiteSpace());
+            Assert.IsTrue("  \t\t\r\n\r\n \t\r\n".IsEmptyOrWhiteSpace());
         }
 
         [TestMethod]

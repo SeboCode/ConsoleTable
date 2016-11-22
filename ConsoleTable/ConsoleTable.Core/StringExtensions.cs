@@ -4,6 +4,11 @@ namespace ConsoleTable.Core
 {
 	public static class StringExtensions
 	{
+	    public static bool IsNullOrEmptyOrWhiteSpace(this string str)
+	    {
+	        return str == null || IsEmptyOrWhiteSpace(str);
+	    }
+
 		public static bool IsEmptyOrWhiteSpace(this string str)
 		{
 			if (str == null)
@@ -11,12 +16,12 @@ namespace ConsoleTable.Core
 				return false;
 			}
 
-			if (str == string.Empty)
-			{
-				return true;
-			}
+			return str == string.Empty || IsWhiteSpace(str);
+		}
 
-            var whitespaceChars = new char[]
+	    public static bool IsWhiteSpace(this string str)
+	    {
+            var whitespaceChars = new []
             {
                 ' ',
                 '\n',
@@ -24,7 +29,7 @@ namespace ConsoleTable.Core
                 '\r'
             };
 
-			return str.AsEnumerable().All(element => whitespaceChars.Any(c => c == element));
-		}
+            return str.AsEnumerable().All(element => whitespaceChars.Any(c => c == element));
+        }
 	}
 }
