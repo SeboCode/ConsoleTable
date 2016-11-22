@@ -89,7 +89,17 @@ namespace ConsoleTable.Core
 				throw new ArgumentException(nameof(rows));
 			}
 
-			if (!rows.First().Any())
+			var hasAny = false;
+
+			foreach (var row in rows)
+			{
+				if (row.Any())
+				{
+					hasAny = true;
+				}
+			}
+
+			if (!hasAny)
 			{
 				throw new ArgumentException(nameof(rows));
 			}
