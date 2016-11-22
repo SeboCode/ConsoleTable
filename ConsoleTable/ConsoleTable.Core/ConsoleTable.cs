@@ -7,11 +7,9 @@ namespace ConsoleTable.Core
 {
     public class ConsoleTable<T>
     {
-        private readonly T[,] _table;
-
-        private readonly bool SameRowLength;
-
         private const string NewLine = "\r\n";
+
+        private readonly T[,] _table;
 
         public T this[int row, int column]
         {
@@ -35,7 +33,7 @@ namespace ConsoleTable.Core
             }
         }
 
-        private ConsoleTable(string title = null, string[] header = null, bool sameRowLength = false)
+        private ConsoleTable(string title = null, string[] header = null)
         {
             if (title.IsEmptyOrWhiteSpace())
             {
@@ -56,11 +54,10 @@ namespace ConsoleTable.Core
 
             Title = title;
             Header = header;
-            SameRowLength = sameRowLength;
+            Settings = ConsoleTable.Settings.Settings.Default;
         }
 
-        public ConsoleTable(T[,] table, string title = null, string[] header = null, bool sameRowLength = false)
-            : this(title, header, sameRowLength)
+        public ConsoleTable(T[,] table, string title = null, string[] header = null) : this(title, header)
         {
             if (table == null)
             {
@@ -70,8 +67,7 @@ namespace ConsoleTable.Core
             _table = table;
         }
 
-        public ConsoleTable(int row, int column, string title = null, string[] header = null, bool sameRowLength = false)
-            : this(title, header, sameRowLength)
+        public ConsoleTable(int row, int column, string title = null, string[] header = null) : this(title, header)
         {
             if (row < 1)
             {
@@ -86,9 +82,7 @@ namespace ConsoleTable.Core
             _table = new T[row, column];
         }
 
-        public ConsoleTable(T fillerElement = default(T), string title = null, string[] header = null,
-            bool sameRowLength = false, params T[][] rows)
-            : this(title, header, sameRowLength)
+        public ConsoleTable(T fillerElement = default(T), string title = null, string[] header = null, params T[][] rows) : this(title, header)
         {
             if (rows == null)
             {
@@ -119,6 +113,8 @@ namespace ConsoleTable.Core
             _table = new T[rows.Count(), biggestColumn];
             FillTable(rows, fillerElement, biggestColumn);
         }
+
+        public Settings.Settings Settings { get; set; }
 
         public string Title { get; set; }
 
@@ -166,7 +162,7 @@ namespace ConsoleTable.Core
 
         private int GetColumnLength(int column)
         {
-            return SameRowLength ? GetOverallMaxLength() : GetColumnMaxLength(column);
+            return Settings.SameRowLength ? GetOverallMaxLength() : GetColumnMaxLength(column);
         }
 
         public void Write()
@@ -177,7 +173,7 @@ namespace ConsoleTable.Core
         public override string ToString()
         {
             var output = string.Empty;
-            var columnSeperator = TableBorders.VerticalLine;
+            var columnSeperator = Settings.TableSymbols.VerticalLine;
 
             if (!Title.IsNullOrEmptyOrWhiteSpace())
             {
@@ -222,15 +218,15 @@ namespace ConsoleTable.Core
 
         private string GetRowSeparator(VerticalBorder verticalBorder)
         {
-            var rowSeparator = TableBorders.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString();
+            var rowSeparator = Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString();
             for (var column = 0; column < ColumnCount; column++)
             {
                 var columnLength = GetColumnLength(column);
 
-                rowSeparator += new string(TableBorders.HorizontalLine, columnLength);
+                rowSeparator += new string(Settings.TableSymbols.HorizontalLine, columnLength);
 
                 var horizontalBorder = column == ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
-                rowSeparator += TableBorders.GetBorderSymbol(horizontalBorder, verticalBorder);
+                rowSeparator += Settings.GetBorderSymbol(horizontalBorder, verticalBorder);
             }
 
             rowSeparator += NewLine;

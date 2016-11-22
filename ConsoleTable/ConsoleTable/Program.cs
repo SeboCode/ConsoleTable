@@ -47,8 +47,7 @@ namespace ConsoleTable
             var matrix = new ConsoleTable<double>(
                 table,
                 title: "Maaatrix",
-                header: new[] { "Column 1", "Mike", "Sandro" },
-                sameRowLength: true
+                header: new[] { "Column 1", "Mike", "Sandro" }
             );
 
             Console.WriteLine(matrix.ToString());
