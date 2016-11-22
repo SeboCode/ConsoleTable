@@ -1,6 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using ConsoleTable.Core.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ConsoleTable.Core.Test
+namespace ConsoleTable.Core.Test.Extensions
 {
     [TestClass]
     public class StringExtensionsTest

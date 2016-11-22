@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace ConsoleTable.Core
+namespace ConsoleTable.Core.Extensions
 {
 	public static class StringExtensions
 	{
