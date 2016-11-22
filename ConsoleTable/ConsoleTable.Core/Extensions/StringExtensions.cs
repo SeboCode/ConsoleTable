@@ -2,26 +2,26 @@
 
 namespace ConsoleTable.Core.Extensions
 {
-	public static class StringExtensions
-	{
-	    public static bool IsNullOrEmptyOrWhiteSpace(this string str)
-	    {
-	        return str == null || IsEmptyOrWhiteSpace(str);
-	    }
+    public static class StringExtensions
+    {
+        public static bool IsNullOrEmptyOrWhiteSpace(this string str)
+        {
+            return str == null || IsEmptyOrWhiteSpace(str);
+        }
 
-		public static bool IsEmptyOrWhiteSpace(this string str)
-		{
-			if (str == null)
-			{
-				return false;
-			}
+        public static bool IsEmptyOrWhiteSpace(this string str)
+        {
+            if (str == null)
+            {
+                return false;
+            }
 
-			return str == string.Empty || IsWhiteSpace(str);
-		}
+            return str == string.Empty || IsWhiteSpace(str);
+        }
 
-	    public static bool IsWhiteSpace(this string str)
-	    {
-            var whitespaceChars = new []
+        public static bool IsWhiteSpace(this string str)
+        {
+            var whitespaceChars = new[]
             {
                 ' ',
                 '\n',
@@ -31,5 +31,5 @@ namespace ConsoleTable.Core.Extensions
 
             return str.AsEnumerable().All(element => whitespaceChars.Any(c => c == element));
         }
-	}
+    }
 }

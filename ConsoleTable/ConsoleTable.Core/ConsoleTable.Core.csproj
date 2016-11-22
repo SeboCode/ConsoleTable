@@ -43,7 +43,12 @@
     <Compile Include="ConsoleTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="TableBorders.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleTable.Settings\ConsoleTable.Settings.csproj">
+      <Project>{551c6b22-6858-440c-bbf4-7e3cb1f90068}</Project>
+      <Name>ConsoleTable.Settings</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

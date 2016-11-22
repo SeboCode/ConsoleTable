@@ -9,7 +9,7 @@ namespace ConsoleTable.Core.Test.Extensions
         [TestMethod]
         public void Test_IsNullOrEmptyOrWhiteSpace_NullString()
         {
-            Assert.IsTrue(((string)null).IsNullOrEmptyOrWhiteSpace());
+            Assert.IsTrue(((string) null).IsNullOrEmptyOrWhiteSpace());
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace ConsoleTable.Core.Test.Extensions
         [TestMethod]
         public void Test_IsEmptyOrWhiteSpace_NullString()
         {
-            Assert.IsFalse(((string)null).IsEmptyOrWhiteSpace());
+            Assert.IsFalse(((string) null).IsEmptyOrWhiteSpace());
         }
 
         [TestMethod]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ConsoleTable.Core.Extensions;
+using ConsoleTable.Settings;
 
 namespace ConsoleTable.Core
 {
