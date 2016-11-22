@@ -1,5 +1,6 @@
 ﻿using System;
 using ConsoleTable.Core;
+using ConsoleTable.Settings;
 
 namespace ConsoleTable
 {
@@ -9,8 +10,24 @@ namespace ConsoleTable
         {
             PrintTableWithNumbers();
             PrintTableWithIds();
+            PrintMatrix();
 
             Console.ReadKey();
+        }
+
+        private static void PrintMatrix()
+        {
+            var matrix = new[,]
+            {
+                {1.25, 214.5},
+                {26.4, 241.5}
+            };
+
+            var table = new ConsoleTable<double>(matrix)
+            {
+                Settings = {TableSymbols = new MatrixTableSymbols()}
+            };
+            Console.WriteLine(table.ToString());
         }
 
         private static void PrintTableWithIds()
@@ -31,14 +48,14 @@ namespace ConsoleTable
         {
             var random = new Random();
 
-            var rowCount = 3;
-            var columnCount = 3;
+            const int rowCount = 3;
+            const int columnCount = 3;
 
             var table = new double[rowCount, columnCount];
 
-            for (int row = 0; row < rowCount; row++)
+            for (var row = 0; row < rowCount; row++)
             {
-                for (int column = 0; column < columnCount; column++)
+                for (var column = 0; column < columnCount; column++)
                 {
                     table[row, column] = random.NextDouble();
                 }
