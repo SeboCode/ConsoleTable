@@ -2,6 +2,7 @@
 {
     public class TableSymbols : ITableSymbols
     {
+        // TODO: rename
         public virtual char HorizontalLine => '─';
         public virtual char VerticalLine => '│';
         public virtual char RightTopCorner => '┐';

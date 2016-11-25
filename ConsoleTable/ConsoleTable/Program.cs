@@ -1,6 +1,5 @@
 ﻿using System;
 using ConsoleTable.Core;
-using ConsoleTable.Settings;
 
 namespace ConsoleTable
 {
@@ -61,12 +60,7 @@ namespace ConsoleTable
                 }
             }
 
-            var matrix = new ConsoleTable<double>(
-                table,
-                title: "Maaatrix",
-                header: new[] { "Column 1", "Mike", "Sandro" }
-            );
-
+            var matrix = new ConsoleTable<double>(table, "Maaatrix", new[] {"Column 1", "Mike", "Sandro"});
             Console.WriteLine(matrix.ToString());
         }
     }

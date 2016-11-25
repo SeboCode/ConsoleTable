@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ConsoleTable.Settings
 {
     public class Settings
     {
-        private Dictionary<Borders, char> _borderAssignment;
+        private readonly Dictionary<Borders, char> _borderAssignment;
 
         public Settings(ITableSymbols tableSymbols)
         {
+            _borderAssignment = new Dictionary<Borders, char>();
             TableSymbols = tableSymbols;
         }
 
@@ -28,18 +28,16 @@ namespace ConsoleTable.Settings
 
         private void AssignBorders()
         {
-            _borderAssignment = new Dictionary<Borders, char>
-            {
-                {new Borders(HorizontalBorder.Left, VerticalBorder.Bottom), TableSymbols.LeftBottomCorner},
-                {new Borders(HorizontalBorder.Left, VerticalBorder.Between), TableSymbols.LeftBorder},
-                {new Borders(HorizontalBorder.Left, VerticalBorder.Top), TableSymbols.LeftTopCorner},
-                {new Borders(HorizontalBorder.Between, VerticalBorder.Bottom), TableSymbols.BottomBorder},
-                {new Borders(HorizontalBorder.Between, VerticalBorder.Between), TableSymbols.BetweenBorder},
-                {new Borders(HorizontalBorder.Between, VerticalBorder.Top), TableSymbols.TopBorder},
-                {new Borders(HorizontalBorder.Right, VerticalBorder.Bottom), TableSymbols.RightBottomCorner},
-                {new Borders(HorizontalBorder.Right, VerticalBorder.Between), TableSymbols.RightBorder},
-                {new Borders(HorizontalBorder.Right, VerticalBorder.Top), TableSymbols.RightTopCorner}
-            };
+            _borderAssignment.Clear();
+            _borderAssignment.Add(new Borders(HorizontalBorder.Left, VerticalBorder.Bottom), TableSymbols.LeftBottomCorner);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Left, VerticalBorder.Between), TableSymbols.LeftBorder);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Left, VerticalBorder.Top), TableSymbols.LeftTopCorner);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Between, VerticalBorder.Bottom), TableSymbols.BottomBorder);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Between, VerticalBorder.Between), TableSymbols.BetweenBorder);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Between, VerticalBorder.Top), TableSymbols.TopBorder);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Right, VerticalBorder.Bottom), TableSymbols.RightBottomCorner);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Right, VerticalBorder.Between), TableSymbols.RightBorder);
+            _borderAssignment.Add(new Borders(HorizontalBorder.Right, VerticalBorder.Top), TableSymbols.RightTopCorner);
         }
 
         public static Settings Default
@@ -54,8 +52,7 @@ namespace ConsoleTable.Settings
                 return settings;
             }
         }
-
-        // TODO: reimplement
+        
         public char GetBorderSymbol(HorizontalBorder horizontalBorder, VerticalBorder verticalBorder)
         {
             return _borderAssignment[new Borders(horizontalBorder, verticalBorder)];
@@ -69,8 +66,8 @@ namespace ConsoleTable.Settings
                 VerticalBorder = verticalBorder;
             }
 
-            public HorizontalBorder HorizontalBorder { get; }
-            public VerticalBorder VerticalBorder { get; }
+            private HorizontalBorder HorizontalBorder { get; }
+            private VerticalBorder VerticalBorder { get; }
 
             public override int GetHashCode()
             {
