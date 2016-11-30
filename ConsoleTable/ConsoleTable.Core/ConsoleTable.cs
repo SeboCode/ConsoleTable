@@ -173,7 +173,7 @@ namespace ConsoleTable.Core
         public override string ToString()
         {
             var output = string.Empty;
-            var columnSeperator = Settings.TableSymbols.VerticalLine;
+            var columnSeperator = Settings.TableSymbols.VerticalTableFieldBorder;
 
             if (!Title.IsNullOrEmptyOrWhiteSpace())
             {
@@ -223,7 +223,7 @@ namespace ConsoleTable.Core
             {
                 var columnLength = GetColumnLength(column);
 
-                rowSeparator += new string(Settings.TableSymbols.HorizontalLine, columnLength);
+                rowSeparator += new string(Settings.TableSymbols.HorizontalTableFieldBorder, columnLength);
 
                 var horizontalBorder = column == ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
                 rowSeparator += Settings.GetBorderSymbol(horizontalBorder, verticalBorder);

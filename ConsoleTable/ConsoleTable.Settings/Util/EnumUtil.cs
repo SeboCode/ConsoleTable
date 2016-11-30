@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace ConsoleTable.Settings
+namespace ConsoleTable.Settings.Util
 {
     public static class EnumUtil
     {

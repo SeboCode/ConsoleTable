@@ -2,17 +2,16 @@
 {
     public class TableSymbols : ITableSymbols
     {
-        // TODO: rename
-        public virtual char HorizontalLine => '─';
-        public virtual char VerticalLine => '│';
-        public virtual char RightTopCorner => '┐';
-        public virtual char RightBottomCorner => '┘';
-        public virtual char LeftBottomCorner => '└';
-        public virtual char LeftTopCorner => '┌';
-        public virtual char TopBorder => '┬';
-        public virtual char RightBorder => '┤';
-        public virtual char BottomBorder => '┴';
-        public virtual char LeftBorder => '├';
-        public virtual char BetweenBorder => '┼';
+        public virtual char TopRightCorner => '┐';
+        public virtual char TopLeftCorner => '┌';
+        public virtual char BottomRightCorner => '┘';
+        public virtual char BottomLeftCorner => '└';
+        public virtual char RightRowSeperator => '┤';
+        public virtual char LeftRowSeperator => '├';
+        public virtual char TopColumnSeperator => '┬';
+        public virtual char BottomColumnSeperator => '┴';
+        public virtual char TableFieldCorner => '┼';
+        public virtual char HorizontalTableFieldBorder => '─';
+        public virtual char VerticalTableFieldBorder => '│';
     }
 }

@@ -2,16 +2,16 @@
 {
     public interface ITableSymbols
     {
-        char HorizontalLine { get; }
-        char VerticalLine { get; }
-        char RightTopCorner { get; }
-        char RightBottomCorner { get; }
-        char LeftBottomCorner { get; }
-        char LeftTopCorner { get; }
-        char TopBorder { get; }
-        char RightBorder { get; }
-        char BottomBorder { get; }
-        char LeftBorder { get; }
-        char BetweenBorder { get; }
+        char TopRightCorner { get; }
+        char TopLeftCorner { get; }
+        char BottomRightCorner { get; }
+        char BottomLeftCorner { get; }
+        char RightRowSeperator { get; }
+        char LeftRowSeperator { get; }
+        char TopColumnSeperator { get; }
+        char BottomColumnSeperator { get; }
+        char TableFieldCorner { get; }
+        char HorizontalTableFieldBorder { get; }
+        char VerticalTableFieldBorder { get; }
     }
 }

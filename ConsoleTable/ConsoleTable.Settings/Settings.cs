@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ConsoleTable.Settings.Util;
 
 namespace ConsoleTable.Settings
 {
@@ -45,15 +46,15 @@ namespace ConsoleTable.Settings
 
         private void AssignBorders()
         {
-            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Bottom)] = TableSymbols.LeftBottomCorner;
-            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Between)] =  TableSymbols.LeftBorder;
-            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Top)] =  TableSymbols.LeftTopCorner;
-            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Bottom)] =  TableSymbols.BottomBorder;
-            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Between)] =  TableSymbols.BetweenBorder;
-            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Top)] =  TableSymbols.TopBorder;
-            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Bottom)] =  TableSymbols.RightBottomCorner;
-            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Between)] =  TableSymbols.RightBorder;
-            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Top)] =  TableSymbols.RightTopCorner;
+            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Bottom)] = TableSymbols.BottomLeftCorner;
+            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Between)] =  TableSymbols.LeftRowSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Top)] =  TableSymbols.TopLeftCorner;
+            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Bottom)] =  TableSymbols.BottomColumnSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Between)] =  TableSymbols.TableFieldCorner;
+            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Top)] =  TableSymbols.TopColumnSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Bottom)] =  TableSymbols.BottomRightCorner;
+            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Between)] =  TableSymbols.RightRowSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Top)] =  TableSymbols.TopRightCorner;
         }
 
         private struct Borders

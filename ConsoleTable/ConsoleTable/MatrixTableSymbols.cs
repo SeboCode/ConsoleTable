@@ -4,11 +4,11 @@ namespace ConsoleTable
 {
     public class MatrixTableSymbols : TableSymbols
     {
-        public override char HorizontalLine => ' ';
-        public override char TopBorder => ' ';
-        public override char RightBorder => base.VerticalLine;
-        public override char BottomBorder => ' ';
-        public override char LeftBorder =>  base.VerticalLine;
-        public override char BetweenBorder => ' ';
+        public override char HorizontalTableFieldBorder => ' ';
+        public override char TopColumnSeperator => ' ';
+        public override char RightRowSeperator => base.VerticalTableFieldBorder;
+        public override char BottomColumnSeperator => ' ';
+        public override char LeftRowSeperator =>  base.VerticalTableFieldBorder;
+        public override char TableFieldCorner => ' ';
     }
 }
