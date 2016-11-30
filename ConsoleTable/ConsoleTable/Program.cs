@@ -22,11 +22,11 @@ namespace ConsoleTable
                 {26.4, 241.5}
             };
 
-            var table = new ConsoleTable<double>(matrix)
+            var table = new ConsoleTableData<double>(matrix)
             {
                 Settings = {TableSymbols = new MatrixTableSymbols()}
             };
-            Console.WriteLine(table.ToString());
+            Console.WriteLine(new ConsoleTable<double>(table));
         }
 
         private static void PrintTableWithIds()
@@ -39,8 +39,8 @@ namespace ConsoleTable
                 { "4", "Lectus Cum Sociis Limited", "Lorem ipsum dolor" }
             };
 
-            var table = new ConsoleTable<string>(data);
-            Console.WriteLine(table.ToString());
+            var table = new ConsoleTableData<string>(data);
+            Console.WriteLine(new ConsoleTable<string>(table));
         }
 
         private static void PrintTableWithNumbers()
@@ -60,8 +60,8 @@ namespace ConsoleTable
                 }
             }
 
-            var matrix = new ConsoleTable<double>(table, "Maaatrix", new[] {"Column 1", "Mike", "Sandro"});
-            Console.WriteLine(matrix.ToString());
+            var matrix = new ConsoleTableData<double>(table, "Maaatrix", new[] {"Column 1", "Mike", "Sandro"});
+            Console.WriteLine(new ConsoleTable<double>(matrix));
         }
     }
 }

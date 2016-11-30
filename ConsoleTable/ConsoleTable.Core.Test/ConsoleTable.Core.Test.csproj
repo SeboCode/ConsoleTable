@@ -50,7 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ConsoleTableTest.cs" />
+    <Compile Include="ConsoleTableDataTest.cs" />
     <Compile Include="Extensions\StringExtensionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
