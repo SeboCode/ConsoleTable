@@ -124,47 +124,6 @@ namespace ConsoleTable.Core
 
         public int ColumnCount => _table.GetLength(1);
 
-        private int GetElementLength(int row, int column)
-        {
-            return $"{_table[row, column]}".Length;
-        }
-
-        private int GetOverallMaxLength()
-        {
-            var maxLength = Header?.Select(header => header.Length).Max() ?? 0;
-
-            for (var row = 0; row < RowCount; row++)
-            {
-                for (var column = 0; column < ColumnCount; column++)
-                {
-                    var elementLength = GetElementLength(row, column);
-
-                    maxLength = maxLength > elementLength ? maxLength : elementLength;
-                }
-            }
-
-            return maxLength;
-        }
-
-        private int GetColumnMaxLength(int columnNumber)
-        {
-            var maxLength = Header?[columnNumber] != null ? Header[columnNumber].Length : 0;
-
-            for (var row = 0; row < RowCount; row++)
-            {
-                var elementLength = GetElementLength(row, columnNumber);
-
-                maxLength = maxLength > elementLength ? maxLength : elementLength;
-            }
-
-            return maxLength;
-        }
-
-        private int GetColumnLength(int column)
-        {
-            return Settings.SameRowLength ? GetOverallMaxLength() : GetColumnMaxLength(column);
-        }
-
         public void Write()
         {
             Console.WriteLine(ToString());
@@ -173,7 +132,6 @@ namespace ConsoleTable.Core
         public override string ToString()
         {
             var output = string.Empty;
-            var columnSeperator = Settings.TableSymbols.VerticalTableFieldBorder;
 
             if (!Title.IsNullOrEmptyOrWhiteSpace())
             {
@@ -185,53 +143,106 @@ namespace ConsoleTable.Core
 
             if (Header != null)
             {
-                for (var header = 0; header < Header.Length; header++)
-                {
-                    output += columnSeperator;
-                    output += Header[header].PadRight(GetColumnLength(header));
-                }
-
-                output += columnSeperator;
-                output += NewLine;
-                output += GetRowSeparator(VerticalBorder.Between);
+                output += GetFormatedHeader();
             }
 
+            output += GetFormatedData();
+            return output;
+        }
+
+        private string GetFormatedData()
+        {
+            var data = string.Empty;
+            var columnSeperator = Settings.TableSymbols.VerticalTableFieldBorder;
 
             for (var row = 0; row < RowCount; row++)
             {
                 for (var column = 0; column < ColumnCount; column++)
                 {
                     var columnLength = GetColumnLength(column);
-                    output += columnSeperator;
-                    output += $"{_table[row, column]}".PadRight(columnLength);
+                    data += columnSeperator;
+                    data += $"{_table[row, column]}".PadRight(columnLength);
                 }
 
-                output += columnSeperator;
-                output += NewLine;
-
+                data += columnSeperator;
+                data += NewLine;
                 var verticalBorder = row == RowCount - 1 ? VerticalBorder.Bottom : VerticalBorder.Between;
-                output += GetRowSeparator(verticalBorder);
+                data += GetRowSeparator(verticalBorder);
             }
 
-            return output;
+            return data;
+        }
+
+        private string GetFormatedHeader()
+        {
+            var formatedHeader = string.Empty;
+            var columnSeperator = Settings.TableSymbols.VerticalTableFieldBorder;
+
+            for (var header = 0; header < Header.Length; header++)
+            {
+                formatedHeader += columnSeperator;
+                formatedHeader += Header[header].PadRight(GetColumnLength(header));
+            }
+
+            formatedHeader += columnSeperator;
+            formatedHeader += NewLine;
+            formatedHeader += GetRowSeparator(VerticalBorder.Between);
+            return formatedHeader;
         }
 
         private string GetRowSeparator(VerticalBorder verticalBorder)
         {
             var rowSeparator = Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString();
+
             for (var column = 0; column < ColumnCount; column++)
             {
                 var columnLength = GetColumnLength(column);
-
                 rowSeparator += new string(Settings.TableSymbols.HorizontalTableFieldBorder, columnLength);
-
                 var horizontalBorder = column == ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
                 rowSeparator += Settings.GetBorderSymbol(horizontalBorder, verticalBorder);
             }
 
             rowSeparator += NewLine;
-
             return rowSeparator;
+        }
+
+        private int GetElementLength(int row, int column)
+        {
+            return $"{_table[row, column]}".Count();
+        }
+
+        private int GetOverallMaxLength()
+        {
+            var maxLength = Header?.Select(header => header.Count()).Max() ?? 0;
+
+            for (var row = 0; row < RowCount; row++)
+            {
+                for (var column = 0; column < ColumnCount; column++)
+                {
+                    var elementLength = GetElementLength(row, column);
+                    maxLength = maxLength > elementLength ? maxLength : elementLength;
+                }
+            }
+
+            return maxLength;
+        }
+
+        private int GetColumnMaxLength(int columnNumber)
+        {
+            var maxLength = Header?[columnNumber]?.Count() ?? 0;
+
+            for (var row = 0; row < RowCount; row++)
+            {
+                var elementLength = GetElementLength(row, columnNumber);
+                maxLength = maxLength > elementLength ? maxLength : elementLength;
+            }
+
+            return maxLength;
+        }
+
+        private int GetColumnLength(int column)
+        {
+            return Settings.SameRowLength ? GetOverallMaxLength() : GetColumnMaxLength(column);
         }
 
         private void FillTable(T[][] table, T fillerElement, int biggestColumn)
