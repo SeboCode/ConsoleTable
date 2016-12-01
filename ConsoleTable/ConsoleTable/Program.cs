@@ -22,16 +22,19 @@ namespace ConsoleTable
                 {26.4, 241.5}
             };
 
-            var table = new ConsoleTableData<double>(matrix)
+            var data = new ConsoleTableData<double>(matrix)
             {
-                Settings = {TableSymbols = new MatrixTableSymbols()}
+                Settings = {TableSymbols = new MatrixTableSymbols()},
+                Title = "Matrix"
             };
-            Console.WriteLine(new ConsoleTable<double>(table));
+
+            var table = new ConsoleTable<double>(data);
+            table.Write();
         }
 
         private static void PrintTableWithIds()
         {
-            var data = new[,]
+            var values = new[,]
             {
                 { "1", "Semper Tellus Limited", "Lorem ipsum dolor sit" },
                 { "2", "Quisque Company", "Lorem ipsum dolor sit" },
@@ -39,8 +42,9 @@ namespace ConsoleTable
                 { "4", "Lectus Cum Sociis Limited", "Lorem ipsum dolor" }
             };
 
-            var table = new ConsoleTableData<string>(data);
-            Console.WriteLine(new ConsoleTable<string>(table));
+            var data = new ConsoleTableData<string>(values);
+            var table = new ConsoleTable<string>(data);
+            table.Write();
         }
 
         private static void PrintTableWithNumbers()
@@ -50,18 +54,19 @@ namespace ConsoleTable
             const int rowCount = 3;
             const int columnCount = 3;
 
-            var table = new double[rowCount, columnCount];
+            var values = new double[rowCount, columnCount];
 
             for (var row = 0; row < rowCount; row++)
             {
                 for (var column = 0; column < columnCount; column++)
                 {
-                    table[row, column] = random.NextDouble();
+                    values[row, column] = random.NextDouble();
                 }
             }
 
-            var matrix = new ConsoleTableData<double>(table, "Maaatrix", new[] {"Column 1", "Mike", "Sandro"});
-            Console.WriteLine(new ConsoleTable<double>(matrix));
+            var data = new ConsoleTableData<double>(values, "Table Title", new[] {"Column 1", "Column 2", "Column 3"});
+            var table = new ConsoleTable<double>(data);
+            table.Write();
         }
     }
 }
