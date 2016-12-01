@@ -1,16 +1,24 @@
 ﻿using System.Collections.Generic;
+using ConsoleTable.Settings.Border;
+using ConsoleTable.Settings.Symbols;
 using ConsoleTable.Settings.Util;
 
 namespace ConsoleTable.Settings
 {
-    public class Settings
+    public class Settings : ISettings
     {
         private readonly Dictionary<Borders, char> _borderAssignment;
 
-        public Settings(ITableSymbols tableSymbols)
+        public Settings(ITableSymbols tableSymbols = null, bool sameRowLength = false)
         {
+            if (tableSymbols == null)
+            {
+                tableSymbols = new TableSymbols();
+            }
+
             _borderAssignment = new Dictionary<Borders, char>(EnumUtil.Size<HorizontalBorder>() * EnumUtil.Size<VerticalBorder>());
             TableSymbols = tableSymbols;
+            SameRowLength = sameRowLength;
         }
 
         public bool SameRowLength { get; set; }
@@ -26,17 +34,10 @@ namespace ConsoleTable.Settings
             }
         }
 
-        public static Settings Default
+        public void ToDefault()
         {
-            get
-            {
-                var settings = new Settings(new TableSymbols())
-                {
-                    SameRowLength = false
-                };
-
-                return settings;
-            }
+            SameRowLength = false;
+            TableSymbols = new TableSymbols();
         }
         
         public char GetBorderSymbol(HorizontalBorder horizontalBorder, VerticalBorder verticalBorder)

@@ -1,5 +1,6 @@
 ﻿using System;
 using ConsoleTable.Core;
+using ConsoleTable.Core.Data;
 
 namespace ConsoleTable
 {

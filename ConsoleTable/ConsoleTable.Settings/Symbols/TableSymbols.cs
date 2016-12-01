@@ -1,4 +1,4 @@
-﻿namespace ConsoleTable.Settings
+﻿namespace ConsoleTable.Settings.Symbols
 {
     public class TableSymbols : ITableSymbols
     {

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
 using ConsoleTable.Core.Extensions;
+using ConsoleTable.Settings;
 
-namespace ConsoleTable.Core
+namespace ConsoleTable.Core.Data
 {
-    public class ConsoleTableData<T>
+    public class ConsoleTableData<T> : IConsoleTableData<T>
     {
         private readonly T[,] _table;
 
@@ -51,7 +52,7 @@ namespace ConsoleTable.Core
 
             Title = title;
             Header = header;
-            Settings = ConsoleTable.Settings.Settings.Default;
+            Settings = new Settings.Settings();
         }
 
         public ConsoleTableData(T[,] table, string title = null, string[] header = null) : this(title, header)
@@ -111,7 +112,7 @@ namespace ConsoleTable.Core
             FillTable(rows, fillerElement, biggestColumn);
         }
 
-        public Settings.Settings Settings { get; set; }
+        public ISettings Settings { get; set; }
 
         public string Title { get; set; }
 

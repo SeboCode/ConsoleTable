@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Linq;
+using ConsoleTable.Core.Data;
 using ConsoleTable.Core.Extensions;
-using ConsoleTable.Settings;
+using ConsoleTable.Settings.Border;
 
 namespace ConsoleTable.Core
 {
-    public class ConsoleTable<T>
+    public class ConsoleTable<T> : IConsoleTable
     {
         private const string NewLine = "\r\n";
 
-        private readonly ConsoleTableData<T> _table;
+        private readonly IConsoleTableData<T> _table;
 
-        public ConsoleTable(ConsoleTableData<T> table)
+        public ConsoleTable(IConsoleTableData<T> table)
         {
             _table = table;
         }

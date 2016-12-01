@@ -1,7 +1,8 @@
 ﻿using System;
+using ConsoleTable.Core.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ConsoleTable.Core.Test
+namespace ConsoleTable.Core.Test.Data
 {
     [TestClass]
     public class ConsoleTableDataTest

@@ -1,4 +1,4 @@
-﻿using ConsoleTable.Settings;
+﻿using ConsoleTable.Settings.Symbols;
 
 namespace ConsoleTable
 {
