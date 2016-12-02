@@ -8,9 +8,119 @@ namespace ConsoleTable.Core.Test.Data
     [TestClass]
     public class ConsoleTableDataTest
     {
+        [TestMethod]
+        public void Test_Get_Value_Valid()
+        {
+            var firstRowFirstColumn = 2;
+            var firstRowSecondColumn = 3;
+            var secondRowFirstColumn = 3;
+            var secondRowSecondColumn = 1;
+            var thirdRowFirstColumn = 8;
+            var thirdRowSecondColumn = 5;
+
+            var table = new[,]
+            {
+                {firstRowFirstColumn, firstRowSecondColumn},
+                {secondRowFirstColumn, secondRowSecondColumn},
+                {thirdRowFirstColumn, thirdRowSecondColumn}
+            };
+
+            var consoleTable = new ConsoleTableData<int>(table);
+            Assert.AreEqual(firstRowFirstColumn, consoleTable[0, 0]);
+            Assert.AreEqual(firstRowSecondColumn, consoleTable[0, 1]);
+            Assert.AreEqual(secondRowFirstColumn, consoleTable[1, 0]);
+            Assert.AreEqual(secondRowSecondColumn, consoleTable[1, 1]);
+            Assert.AreEqual(thirdRowFirstColumn, consoleTable[2, 0]);
+            Assert.AreEqual(thirdRowSecondColumn, consoleTable[2, 1]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Get_Value_Row_Too_Large()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            var value = consoleTable[10000, 0];
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Get_Value_Column_Too_Large()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            var value = consoleTable[0, 10000];
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Get_Value_Row_Negative()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            var value = consoleTable[-1, 0];
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Get_Value_Column_Negative()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            var value = consoleTable[0, -1];
+        }
+
+        [TestMethod]
+        public void Test_Set_Value_Valid()
+        {
+            var newValue = 10;
+            var row = 2;
+            var column = 1;
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            consoleTable[row, column] = newValue;
+            Assert.AreEqual(newValue, consoleTable[row, column]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Set_Value_Row_Too_Large()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            consoleTable[10000, 0] = 10;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Set_Value_Column_Too_Large()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            consoleTable[0, 10000] = 10;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Set_Value_Row_Negative()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            consoleTable[-1, 0] = 10;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Test_Set_Value_Column_Negative()
+        {
+            var table = new[,] {{2, 3}, {3, 1}, {8, 5}};
+            var consoleTable = new ConsoleTableData<int>(table);
+            consoleTable[0, -1] = 10;
+        }
+
         #region Tests for table-constructor
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Valid()
+        public void Test_Create_Table_Valid()
         {
             var title = "Title";
             var header = new[] { "Header 1", "Header2" };
@@ -22,34 +132,34 @@ namespace ConsoleTable.Core.Test.Data
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_Create_ConsoleTable_Table_Null()
+        public void Test_Create_Table_Null()
         {
             new ConsoleTableData<string>(table: null);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Title_Empty()
+        public void Test_Create_Table_Title_Empty()
         {
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], string.Empty);
             Assert.IsNull(consoleTable.Title);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Title_WhiteSpace()
+        public void Test_Create_Table_Title_WhiteSpace()
         {
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], "    ");
             Assert.IsNull(consoleTable.Title);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Title_Tabs_And_Line_Breaks()
+        public void Test_Create_Table_Title_Tabs_And_Line_Breaks()
         {
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], "  \n  \t\t\n  \r ");
             Assert.IsNull(consoleTable.Title);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_One_Header_Element_Empty()
+        public void Test_Create_Table_One_Header_Element_Empty()
         {
             var header = new[] {string.Empty};
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], header: header);
@@ -57,7 +167,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_One_Header_Element_WhiteSpace()
+        public void Test_Create_Table_One_Header_Element_WhiteSpace()
         {
             var header = new[] {"    "};
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], header: header);
@@ -65,7 +175,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_One_Header_Element_Tabs_And_Line_Breaks()
+        public void Test_Create_Table_One_Header_Element_Tabs_And_Line_Breaks()
         {
             var header = new[] {"  \n  \t\t\n  \r "};
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], header: header);
@@ -73,7 +183,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Multiple_Header_Element_Empty()
+        public void Test_Create_Table_Multiple_Header_Element_Empty()
         {
             var header = new[] {"Test", string.Empty};
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], header: header);
@@ -82,7 +192,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Multiple_Header_Element_WhiteSpace()
+        public void Test_Create_Table_Multiple_Header_Element_WhiteSpace()
         {
             var header = new[] {"Test", "    "};
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], header: header);
@@ -91,7 +201,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Multiple_Header_Element_Tabs_And_Line_Breaks()
+        public void Test_Create_Table_Multiple_Header_Element_Tabs_And_Line_Breaks()
         {
             var header = new[] {"Test", "  \n  \t\t\n  \r "};
             var consoleTable = new ConsoleTableData<string>(new string[1, 1], header: header);
@@ -100,7 +210,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Table_Settings_Not_Null()
+        public void Test_Create_Table_Settings_Not_Null()
         {
             var consoleTable = new ConsoleTableData<string>(new string[1, 1]);
             Assert.IsNotNull(consoleTable.Settings);
@@ -109,7 +219,7 @@ namespace ConsoleTable.Core.Test.Data
 
         #region Tests for row-column-constructor
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Valid()
+        public void Test_Create_RowColumn_Valid()
         {
             var title = "Title";
             var header = new[] { "Header 1", "Header2" };
@@ -125,41 +235,41 @@ namespace ConsoleTable.Core.Test.Data
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void Test_Create_ConsoleTable_RowColumn_Illegal_Rownumber()
+        public void Test_Create_RowColumn_Illegal_Rownumber()
         {
             new ConsoleTableData<string>(0, 10);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void Test_Create_ConsoleTable_RowColumn_Illegal_Columnnumber()
+        public void Test_Create_RowColumn_Illegal_Columnnumber()
         {
             new ConsoleTableData<string>(10, 0);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Title_Empty()
+        public void Test_Create_RowColumn_Title_Empty()
         {
             var consoleTable = new ConsoleTableData<string>(1, 1, string.Empty);
             Assert.IsNull(consoleTable.Title);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Title_WhiteSpace()
+        public void Test_Create_RowColumn_Title_WhiteSpace()
         {
             var consoleTable = new ConsoleTableData<string>(1, 1, "    ");
             Assert.IsNull(consoleTable.Title);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Title_Tabs_And_Line_Breaks()
+        public void Test_Create_RowColumn_Title_Tabs_And_Line_Breaks()
         {
             var consoleTable = new ConsoleTableData<string>(1, 1, "  \n  \t\t\n  \r ");
             Assert.IsNull(consoleTable.Title);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_One_Header_Element_Empty()
+        public void Test_Create_RowColumn_One_Header_Element_Empty()
         {
             var header = new[] {string.Empty};
             var consoleTable = new ConsoleTableData<string>(1, 1, header: header);
@@ -167,7 +277,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_One_Header_Element_WhiteSpace()
+        public void Test_Create_RowColumn_One_Header_Element_WhiteSpace()
         {
             var header = new[] {"    "};
             var consoleTable = new ConsoleTableData<string>(1, 1, header: header);
@@ -175,7 +285,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_One_Header_Element_Tabs_And_Line_Breaks()
+        public void Test_Create_RowColumn_One_Header_Element_Tabs_And_Line_Breaks()
         {
             var header = new[] {"  \n  \t\t\n  \r "};
             var consoleTable = new ConsoleTableData<string>(1, 1, header: header);
@@ -183,7 +293,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Multiple_Header_Element_Empty()
+        public void Test_Create_RowColumn_Multiple_Header_Element_Empty()
         {
             var header = new[] {"Test", string.Empty};
             var consoleTable = new ConsoleTableData<string>(1, 1, header: header);
@@ -192,7 +302,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Multiple_Header_Element_WhiteSpace()
+        public void Test_Create_RowColumn_Multiple_Header_Element_WhiteSpace()
         {
             var header = new[] {"Test", "    "};
             var consoleTable = new ConsoleTableData<string>(1, 1, header: header);
@@ -201,7 +311,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Multiple_Header_Element_Tabs_And_Line_Breaks()
+        public void Test_Create_RowColumn_Multiple_Header_Element_Tabs_And_Line_Breaks()
         {
             var header = new[] {"Test", "  \n  \t\t\n  \r "};
             var consoleTable = new ConsoleTableData<string>(1, 1, header: header);
@@ -210,7 +320,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_RowColumn_Settings_Not_Null()
+        public void Test_Create_RowColumn_Settings_Not_Null()
         {
             var consoleTable = new ConsoleTableData<string>(1, 1);
             Assert.IsNotNull(consoleTable.Settings);
@@ -219,7 +329,7 @@ namespace ConsoleTable.Core.Test.Data
 
         #region Tests for rows-constructor
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Valid()
+        public void Test_Create_Rows_Valid()
         {
             var fillerElement = "filler";
             var title = "Title";
@@ -238,20 +348,20 @@ namespace ConsoleTable.Core.Test.Data
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Test_Create_ConsoleTable_Rows_Null()
+        public void Test_Create_Rows_Null()
         {
             new ConsoleTableData<string>(rows: null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void Test_Create_ConsoleTable_Rows_First_Dimension_Empty()
+        public void Test_Create_Rows_First_Dimension_Empty()
         {
             new ConsoleTableData<string>(rows: new string[0][]);
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Second_Dimension_Some_Empty()
+        public void Test_Create_Rows_Second_Dimension_Some_Empty()
         {
             var row1 = new[] {"Row1"};
             var row2 = new[] {"Hello", "World"};
@@ -263,7 +373,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Second_Dimension_One_Row_Empty()
+        public void Test_Create_Rows_Second_Dimension_One_Row_Empty()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -276,7 +386,7 @@ namespace ConsoleTable.Core.Test.Data
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void Test_Create_ConsoleTable_Rows_Second_Dimension_All_Empty()
+        public void Test_Create_Rows_Second_Dimension_All_Empty()
         {
             var row1 = new string[0];
             var row2 = new string[0];
@@ -284,7 +394,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Custom_FillerElement()
+        public void Test_Create_Rows_Custom_FillerElement()
         {
             var fillerElement = "filler";
             var row1 = new string[0];
@@ -295,7 +405,7 @@ namespace ConsoleTable.Core.Test.Data
         }
         
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Title_Empty()
+        public void Test_Create_Rows_Title_Empty()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -304,7 +414,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Title_WhiteSpace()
+        public void Test_Create_Rows_Title_WhiteSpace()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -313,7 +423,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Title_Tabs_And_Line_Breaks()
+        public void Test_Create_Rows_Title_Tabs_And_Line_Breaks()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -322,7 +432,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_One_Header_Element_Empty()
+        public void Test_Create_Rows_One_Header_Element_Empty()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -332,7 +442,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_One_Header_Element_WhiteSpace()
+        public void Test_Create_Rows_One_Header_Element_WhiteSpace()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -342,7 +452,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_One_Header_Element_Tabs_And_Line_Breaks()
+        public void Test_Create_Rows_One_Header_Element_Tabs_And_Line_Breaks()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -352,7 +462,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Multiple_Header_Element_Empty()
+        public void Test_Create_Rows_Multiple_Header_Element_Empty()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -363,7 +473,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Multiple_Header_Element_WhiteSpace()
+        public void Test_Create_Rows_Multiple_Header_Element_WhiteSpace()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -374,7 +484,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Multiple_Header_Element_Tabs_And_Line_Breaks()
+        public void Test_Create_Rows_Multiple_Header_Element_Tabs_And_Line_Breaks()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
@@ -385,7 +495,7 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
-        public void Test_Create_ConsoleTable_Rows_Settings_Not_Null()
+        public void Test_Create_Rows_Settings_Not_Null()
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
