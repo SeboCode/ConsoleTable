@@ -376,6 +376,18 @@ namespace ConsoleTable.Core.Test.Data
         public void Test_Create_Rows_Second_Dimension_One_Row_Empty()
         {
             var row1 = new string[0];
+            var row2 = new[] { "Hello", "World" };
+            var consoleTable = new ConsoleTableData<string>(rows: new[] {row1, row2});
+            Assert.IsNull(consoleTable[0, 0]);
+            Assert.IsNull(consoleTable[0, 1]);
+            Assert.AreEqual(row2.First(), consoleTable[1, 0]);
+            Assert.AreEqual(row2.Last(), consoleTable[1, 1]);
+        }
+        
+        [TestMethod]
+        public void Test_Create_Rows_Second_Dimension_One_Row_Set_But_Not_Filled()
+        {
+            var row1 = new string[4];
             var row2 = new[] {"Hello", "World"};
             var consoleTable = new ConsoleTableData<string>(rows: new[] {row1, row2});
             Assert.IsNull(consoleTable[0, 0]);
@@ -385,12 +397,40 @@ namespace ConsoleTable.Core.Test.Data
         }
 
         [TestMethod]
+        public void Test_Create_Rows_Second_Dimension_One_Row_Set_But_Not_Filled_ColumnCount()
+        {
+            var biggest = 4;
+            var row1 = new string[biggest];
+            var row2 = new[] {"Hello", "World"};
+            var consoleTable = new ConsoleTableData<string>(rows: new[] {row1, row2});
+            Assert.AreEqual(biggest, consoleTable.ColumnCount);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Test_Create_Rows_Second_Dimension_All_Empty()
         {
             var row1 = new string[0];
             var row2 = new string[0];
-            new ConsoleTableData<string>(rows: new[] { row1, row2 });
+            new ConsoleTableData<string>(rows: new[] {row1, row2});
+        }
+
+        [TestMethod]
+        public void Test_Create_Rows_Second_Dimension_All_Set_But_Not_Filled()
+        {
+            var row1 = new string[3];
+            var row2 = new string[6];
+            new ConsoleTableData<string>(rows: new[] {row1, row2});
+        }
+
+        [TestMethod]
+        public void Test_Create_Rows_Second_Dimension_All_Set_But_Not_Filled_ColumnCount()
+        {
+            var biggest = 6;
+            var row1 = new string[3];
+            var row2 = new string[biggest];
+            var consoleTable = new ConsoleTableData<string>(rows: new[] {row1, row2});
+            Assert.AreEqual(biggest, consoleTable.ColumnCount);
         }
 
         [TestMethod]
