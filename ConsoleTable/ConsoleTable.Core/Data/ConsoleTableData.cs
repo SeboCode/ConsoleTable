@@ -128,11 +128,11 @@ namespace ConsoleTable.Core.Data
             {
                 for (var y = 0; y < biggestColumn; y++)
                 {
-                    try
+                    if (table[x].Count() > y)
                     {
                         _table[x, y] = table[x][y];
                     }
-                    catch (IndexOutOfRangeException)
+                    else
                     {
                         _table[x, y] = fillerElement;
                     }
