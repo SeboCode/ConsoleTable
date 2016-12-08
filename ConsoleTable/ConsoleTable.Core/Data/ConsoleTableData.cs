@@ -5,6 +5,7 @@ using ConsoleTable.Settings;
 
 namespace ConsoleTable.Core.Data
 {
+    //todo rename to consoletable
     public class ConsoleTableData<T> : IConsoleTableData<T>
     {
         private readonly T[,] _table;
@@ -55,6 +56,7 @@ namespace ConsoleTable.Core.Data
             Settings = new Settings.Settings();
         }
 
+        //overwork in c# 7
         public ConsoleTableData(T[,] table, string title = null, string[] header = null) : this(title, header)
         {
             if (table == null)
@@ -80,6 +82,7 @@ namespace ConsoleTable.Core.Data
             _table = new T[row, column];
         }
 
+        //todo use 2d array instead of params => move fillerelement to end
         public ConsoleTableData(T fillerElement = default(T), string title = null, string[] header = null, params T[][] rows) : this(title, header)
         {
             if (rows == null)

@@ -2,6 +2,7 @@
 {
     public class TableSymbols : ITableSymbols
     {
+        //todo remove virtual (we already have an interface => redundant)
         public virtual char TopRightCorner { get; set; } = '┐';
         public virtual char TopLeftCorner { get; set; } = '┌';
         public virtual char BottomRightCorner { get; set; } = '┘';

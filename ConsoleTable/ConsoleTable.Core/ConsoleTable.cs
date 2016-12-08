@@ -6,12 +6,14 @@ using ConsoleTable.Settings.Border;
 
 namespace ConsoleTable.Core
 {
+    //todo renaming renderer, drawer
     public class ConsoleTable<T> : IConsoleTable
     {
         private const string NewLine = "\r\n";
 
         private readonly IConsoleTableData<T> _table;
 
+        //todo second interface without generic
         public ConsoleTable(IConsoleTableData<T> table)
         {
             _table = table;
@@ -22,6 +24,8 @@ namespace ConsoleTable.Core
             Console.WriteLine(ToString());
         }
 
+        //todo use stringbuilder instead of +=
+        //todo move into other methode (getformatedtable) and call it in the tostring method
         public override string ToString()
         {
             var output = string.Empty;
@@ -59,6 +63,7 @@ namespace ConsoleTable.Core
 
                 data += columnSeperator;
                 data += NewLine;
+                //todo move out of for loop and iterate one time less
                 var verticalBorder = row == _table.RowCount - 1 ? VerticalBorder.Bottom : VerticalBorder.Between;
                 data += GetRowSeparator(verticalBorder);
             }
@@ -87,10 +92,12 @@ namespace ConsoleTable.Core
         {
             var rowSeparator = _table.Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString();
 
+            //todo calculate columnlength and save it in an array, so it doesnt need to be calculated multiple times
             for (var column = 0; column < _table.ColumnCount; column++)
             {
                 var columnLength = GetColumnLength(column);
                 rowSeparator += new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, columnLength);
+                //todo move out of for loop and iterate one time less
                 var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
                 rowSeparator += _table.Settings.GetBorderSymbol(horizontalBorder, verticalBorder);
             }

@@ -9,6 +9,7 @@ namespace ConsoleTable.Settings
     {
         private readonly Dictionary<Borders, char> _borderAssignment;
 
+        //todo rename => consoletablesettings
         public Settings(ITableSymbols tableSymbols = null, bool sameRowLength = false)
         {
             if (tableSymbols == null)
@@ -45,8 +46,10 @@ namespace ConsoleTable.Settings
             return _borderAssignment[new Borders(horizontalBorder, verticalBorder)];
         }
 
+        //todo move functionality to tablesymbols
         private void AssignBorders()
         {
+            //todo redundant => remove
             _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Bottom)] = TableSymbols.BottomLeftCorner;
             _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Between)] =  TableSymbols.LeftRowSeperator;
             _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Top)] =  TableSymbols.TopLeftCorner;
@@ -69,6 +72,7 @@ namespace ConsoleTable.Settings
             private HorizontalBorder HorizontalBorder { get; }
             private VerticalBorder VerticalBorder { get; }
 
+            //todo remove
             public override int GetHashCode()
             {
                 return HorizontalBorder.GetHashCode() ^ VerticalBorder.GetHashCode();
