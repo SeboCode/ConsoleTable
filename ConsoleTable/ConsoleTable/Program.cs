@@ -1,6 +1,6 @@
 ﻿using System;
 using ConsoleTable.Core;
-using ConsoleTable.Core.Data;
+using ConsoleTable.Core.Drawer;
 
 namespace ConsoleTable
 {
@@ -23,13 +23,13 @@ namespace ConsoleTable
                 {26.4, 241.5}
             };
 
-            var data = new ConsoleTableData<double>(matrix)
+            var data = new ConsoleTable<double>(matrix)
             {
                 Settings = {TableSymbols = new MatrixTableSymbols()},
                 Title = "Matrix"
             };
 
-            var table = new ConsoleTable<double>(data);
+            var table = new ConsoleTableDrawer<double>(data);
             table.Write();
         }
 
@@ -43,8 +43,8 @@ namespace ConsoleTable
                 { "4", "Lectus Cum Sociis Limited", "Lorem ipsum dolor" }
             };
 
-            var data = new ConsoleTableData<string>(values);
-            var table = new ConsoleTable<string>(data);
+            var data = new ConsoleTable<string>(values);
+            var table = new ConsoleTableDrawer<string>(data);
             table.Write();
         }
 
@@ -65,8 +65,8 @@ namespace ConsoleTable
                 }
             }
 
-            var data = new ConsoleTableData<double>(values, "Table Title", new[] {"Column 1", "Column 2", "Column 3"});
-            var table = new ConsoleTable<double>(data);
+            var data = new ConsoleTable<double>(values, "Table Title", new[] {"Column 1", "Column 2", "Column 3"});
+            var table = new ConsoleTableDrawer<double>(data);
             table.Write();
         }
     }

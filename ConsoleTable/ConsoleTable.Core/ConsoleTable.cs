@@ -1,148 +1,145 @@
 ﻿using System;
 using System.Linq;
-using ConsoleTable.Core.Data;
 using ConsoleTable.Core.Extensions;
-using ConsoleTable.Settings.Border;
+using ConsoleTable.Settings;
 
 namespace ConsoleTable.Core
 {
-    //todo renaming renderer, drawer
-    public class ConsoleTable<T> : IConsoleTable
+    public class ConsoleTable<T> : IConsoleTable<T>
     {
-        private const string NewLine = "\r\n";
+        private readonly T[,] _table;
 
-        private readonly IConsoleTableData<T> _table;
-
-        //todo second interface without generic
-        public ConsoleTable(IConsoleTableData<T> table)
+        public T this[int row, int column]
         {
+            get
+            {
+                if (row < 0 || column < 0 || row >= RowCount || column >= ColumnCount)
+                {
+                    throw new IndexOutOfRangeException(nameof(_table));
+                }
+
+                return _table[row, column];
+            }
+            set
+            {
+                if (row < 0 || column < 0 || row >= RowCount || column >= ColumnCount)
+                {
+                    throw new IndexOutOfRangeException(nameof(_table));
+                }
+
+                _table[row, column] = value;
+            }
+        }
+
+        private ConsoleTable(string title = null, string[] header = null)
+        {
+            if (title.IsEmptyOrWhiteSpace())
+            {
+                title = null;
+            }
+
+
+            if (header != null)
+            {
+                for (var i = 0; i < header.Count(); i++)
+                {
+                    if (header[i].IsEmptyOrWhiteSpace())
+                    {
+                        header[i] = null;
+                    }
+                }
+            }
+
+            Title = title;
+            Header = header;
+            Settings = new Settings.Settings();
+        }
+
+        //overwork in c# 7
+        public ConsoleTable(T[,] table, string title = null, string[] header = null) : this(title, header)
+        {
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+
             _table = table;
         }
 
-        public void Write()
+        public ConsoleTable(int row, int column, string title = null, string[] header = null) : this(title, header)
         {
-            Console.WriteLine(ToString());
-        }
-
-        //todo use stringbuilder instead of +=
-        //todo move into other methode (getformatedtable) and call it in the tostring method
-        public override string ToString()
-        {
-            var output = string.Empty;
-
-            if (!_table.Title.IsNullOrEmptyOrWhiteSpace())
+            if (row < 1)
             {
-                output += _table.Title;
-                output += NewLine;
+                throw new ArgumentException(nameof(row));
             }
 
-            output += GetRowSeparator(VerticalBorder.Top);
-
-            if (_table.Header != null)
+            if (column < 1)
             {
-                output += GetFormatedHeader();
+                throw new ArgumentException(nameof(column));
             }
 
-            output += GetFormatedData();
-            return output;
+            _table = new T[row, column];
         }
 
-        private string GetFormatedData()
+        //todo use 2d array instead of params => move fillerelement to end
+        public ConsoleTable(T fillerElement = default(T), string title = null, string[] header = null, params T[][] rows) : this(title, header)
         {
-            var data = string.Empty;
-            var columnSeperator = _table.Settings.TableSymbols.VerticalTableFieldBorder;
-
-            for (var row = 0; row < _table.RowCount; row++)
+            if (rows == null)
             {
-                for (var column = 0; column < _table.ColumnCount; column++)
+                throw new ArgumentNullException(nameof(rows));
+            }
+
+            if (!rows.Any())
+            {
+                throw new ArgumentException(nameof(rows));
+            }
+
+            var hasAny = false;
+
+            foreach (var row in rows)
+            {
+                if (row.Any())
                 {
-                    var columnLength = GetColumnLength(column);
-                    data += columnSeperator;
-                    data += $"{_table[row, column]}".PadRight(columnLength);
-                }
-
-                data += columnSeperator;
-                data += NewLine;
-                //todo move out of for loop and iterate one time less
-                var verticalBorder = row == _table.RowCount - 1 ? VerticalBorder.Bottom : VerticalBorder.Between;
-                data += GetRowSeparator(verticalBorder);
-            }
-
-            return data;
-        }
-
-        private string GetFormatedHeader()
-        {
-            var formatedHeader = string.Empty;
-            var columnSeperator = _table.Settings.TableSymbols.VerticalTableFieldBorder;
-
-            for (var i = 0; i < _table.Header.Count(); i++)
-            {
-                formatedHeader += columnSeperator;
-                formatedHeader += _table.Header[i].PadRight(GetColumnLength(i));
-            }
-
-            formatedHeader += columnSeperator;
-            formatedHeader += NewLine;
-            formatedHeader += GetRowSeparator(VerticalBorder.Between);
-            return formatedHeader;
-        }
-
-        private string GetRowSeparator(VerticalBorder verticalBorder)
-        {
-            var rowSeparator = _table.Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString();
-
-            //todo calculate columnlength and save it in an array, so it doesnt need to be calculated multiple times
-            for (var column = 0; column < _table.ColumnCount; column++)
-            {
-                var columnLength = GetColumnLength(column);
-                rowSeparator += new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, columnLength);
-                //todo move out of for loop and iterate one time less
-                var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
-                rowSeparator += _table.Settings.GetBorderSymbol(horizontalBorder, verticalBorder);
-            }
-
-            rowSeparator += NewLine;
-            return rowSeparator;
-        }
-
-        private int GetElementLength(int row, int column)
-        {
-            return $"{_table[row, column]}".Count();
-        }
-
-        private int GetColumnLength(int column)
-        {
-            return _table.Settings.SameRowLength ? GetOverallMaxLength() : GetColumnMaxLength(column);
-        }
-
-        private int GetOverallMaxLength()
-        {
-            var maxLength = _table.Header?.Select(header => header.Count()).Max() ?? 0;
-
-            for (var row = 0; row < _table.RowCount; row++)
-            {
-                for (var column = 0; column < _table.ColumnCount; column++)
-                {
-                    var elementLength = GetElementLength(row, column);
-                    maxLength = maxLength > elementLength ? maxLength : elementLength;
+                    hasAny = true;
                 }
             }
 
-            return maxLength;
-        }
-
-        private int GetColumnMaxLength(int columnNumber)
-        {
-            var maxLength = _table.Header?[columnNumber]?.Count() ?? 0;
-
-            for (var row = 0; row < _table.RowCount; row++)
+            if (!hasAny)
             {
-                var elementLength = GetElementLength(row, columnNumber);
-                maxLength = maxLength > elementLength ? maxLength : elementLength;
+                throw new ArgumentException(nameof(rows));
             }
 
-            return maxLength;
+            var biggestColumn = rows.Select(row => row.Count()).Max();
+            _table = new T[rows.Count(), biggestColumn];
+            FillTable(rows, fillerElement, biggestColumn);
+        }
+
+        public ISettings Settings { get; set; }
+
+        public string Title { get; set; }
+
+        public string[] Header { get; set; }
+
+        public int RowCount => _table.GetLength(0);
+
+        public int ColumnCount => _table.GetLength(1);
+
+        private void FillTable(T[][] table, T fillerElement, int biggestColumn)
+        {
+            for (var x = 0; x < table.Count(); x++)
+            {
+                for (var y = 0; y < biggestColumn; y++)
+                {
+                    if (table[x].Count() > y)
+                    {
+                        _table[x, y] = table[x][y];
+                    }
+                    else
+                    {
+                        _table[x, y] = fillerElement;
+                    }
+                }
+            }
         }
     }
 }

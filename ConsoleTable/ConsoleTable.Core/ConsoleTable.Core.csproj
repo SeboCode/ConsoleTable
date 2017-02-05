@@ -40,10 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawer\ConsoleTableDrawer.cs" />
     <Compile Include="ConsoleTable.cs" />
-    <Compile Include="Data\ConsoleTableData.cs" />
-    <Compile Include="Data\IConsoleTableData.cs" />
     <Compile Include="IConsoleTable.cs" />
+    <Compile Include="Drawer\IConsoleTableDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
   </ItemGroup>
