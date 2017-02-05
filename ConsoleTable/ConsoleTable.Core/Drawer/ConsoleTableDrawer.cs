@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using ConsoleTable.Core.Extensions;
 using ConsoleTable.Settings.Border;
 
@@ -21,32 +22,36 @@ namespace ConsoleTable.Core.Drawer
             Console.WriteLine(ToString());
         }
 
-        //todo use stringbuilder instead of +=
-        //todo move into other methode (getformatedtable) and call it in the tostring method
         public override string ToString()
         {
-            var output = string.Empty;
+            return GetFormatedTable();
+        }
+
+        private string GetFormatedTable()
+        {
+            var output = new StringBuilder();
 
             if (!_table.Title.IsNullOrEmptyOrWhiteSpace())
             {
-                output += _table.Title;
-                output += NewLine;
+                output.Append(_table.Title);
+                output.Append(NewLine);
             }
 
-            output += GetRowSeparator(VerticalBorder.Top);
+            output.Append(GetRowSeparator(VerticalBorder.Top));
+            output.Append(NewLine);
 
             if (_table.Header != null)
             {
-                output += GetFormatedHeader();
+                output.Append(GetFormatedHeader());
             }
 
-            output += GetFormatedData();
-            return output;
+            output.Append(GetFormatedData());
+            return output.ToString();
         }
 
         private string GetFormatedData()
         {
-            var data = string.Empty;
+            var data = new StringBuilder();
             var columnSeperator = _table.Settings.TableSymbols.VerticalTableFieldBorder;
 
             for (var row = 0; row < _table.RowCount; row++)
@@ -54,53 +59,55 @@ namespace ConsoleTable.Core.Drawer
                 for (var column = 0; column < _table.ColumnCount; column++)
                 {
                     var columnLength = GetColumnLength(column);
-                    data += columnSeperator;
-                    data += $"{_table[row, column]}".PadRight(columnLength);
+                    data.Append(columnSeperator);
+                    data.Append($"{_table[row, column]}".PadRight(columnLength));
                 }
 
-                data += columnSeperator;
-                data += NewLine;
+                data.Append(columnSeperator);
+                data.Append(NewLine);
                 //todo move out of for loop and iterate one time less
                 var verticalBorder = row == _table.RowCount - 1 ? VerticalBorder.Bottom : VerticalBorder.Between;
-                data += GetRowSeparator(verticalBorder);
+                data.Append(GetRowSeparator(verticalBorder));
+                data.Append(NewLine);
             }
 
-            return data;
+            return data.ToString();
         }
 
         private string GetFormatedHeader()
         {
-            var formatedHeader = string.Empty;
+            var formatedHeader = new StringBuilder();
             var columnSeperator = _table.Settings.TableSymbols.VerticalTableFieldBorder;
 
             for (var i = 0; i < _table.Header.Count(); i++)
             {
-                formatedHeader += columnSeperator;
-                formatedHeader += _table.Header[i].PadRight(GetColumnLength(i));
+                formatedHeader.Append(columnSeperator);
+                formatedHeader.Append(_table.Header[i].PadRight(GetColumnLength(i)));
             }
 
-            formatedHeader += columnSeperator;
-            formatedHeader += NewLine;
-            formatedHeader += GetRowSeparator(VerticalBorder.Between);
-            return formatedHeader;
+            formatedHeader.Append(columnSeperator);
+            formatedHeader.Append(NewLine);
+            formatedHeader.Append(GetRowSeparator(VerticalBorder.Between));
+            formatedHeader.Append(NewLine);
+            return formatedHeader.ToString();
         }
 
         private string GetRowSeparator(VerticalBorder verticalBorder)
         {
-            var rowSeparator = _table.Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString();
+            var rowSeparator = new StringBuilder();
+            rowSeparator.Append(_table.Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString());
 
             //todo calculate columnlength and save it in an array, so it doesnt need to be calculated multiple times
             for (var column = 0; column < _table.ColumnCount; column++)
             {
                 var columnLength = GetColumnLength(column);
-                rowSeparator += new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, columnLength);
+                rowSeparator.Append(new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, columnLength));
                 //todo move out of for loop and iterate one time less
                 var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
-                rowSeparator += _table.Settings.GetBorderSymbol(horizontalBorder, verticalBorder);
+                rowSeparator.Append(_table.Settings.GetBorderSymbol(horizontalBorder, verticalBorder));
             }
-
-            rowSeparator += NewLine;
-            return rowSeparator;
+            
+            return rowSeparator.ToString();
         }
 
         private int GetElementLength(int row, int column)
