@@ -11,12 +11,11 @@ namespace ConsoleTable.Core.Drawer
         private const string NewLine = "\r\n";
 
         private readonly IConsoleTable _table;
-        private readonly int[] _columnLengths;
+        private int[] _columnLengths;
 
         public ConsoleTableDrawer(IConsoleTable table)
         {
             _table = table;
-            _columnLengths = new int[table.ColumnCount];
         }
 
         public void Write()
@@ -31,6 +30,7 @@ namespace ConsoleTable.Core.Drawer
 
         private string GetFormatedTable()
         {
+            _columnLengths = _table.Settings.SameRowLength ? CalculateOverallMaxColumnLength(_table.ColumnCount) : CalculateColumnLength(_table.ColumnCount);
             var output = new StringBuilder();
 
             if (!_table.Title.IsNullOrEmptyOrWhiteSpace())
@@ -60,7 +60,7 @@ namespace ConsoleTable.Core.Drawer
             {
                 for (var column = 0; column < _table.ColumnCount; column++)
                 {
-                    var columnLength = GetColumnLength(column);
+                    var columnLength = _columnLengths[column];
                     data.Append(columnSeperator);
                     data.Append($"{_table[row, column]}".PadRight(columnLength));
                 }
@@ -83,7 +83,7 @@ namespace ConsoleTable.Core.Drawer
             for (var i = 0; i < _table.Header.Count(); i++)
             {
                 formatedHeader.Append(columnSeperator);
-                formatedHeader.Append(_table.Header[i].PadRight(GetColumnLength(i)));
+                formatedHeader.Append(_table.Header[i].PadRight(_columnLengths[i]));
             }
 
             formatedHeader.Append(columnSeperator);
@@ -95,11 +95,6 @@ namespace ConsoleTable.Core.Drawer
 
         private string GetRowSeparator(VerticalBorder verticalBorder)
         {
-            if (_columnLengths.FirstOrDefault() == 0)
-            {
-                CalculateColumnLength();
-            }
-
             var rowSeparator = new StringBuilder();
             rowSeparator.Append(_table.Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString());
             
@@ -113,22 +108,29 @@ namespace ConsoleTable.Core.Drawer
             return rowSeparator.ToString();
         }
 
-        private void CalculateColumnLength()
+        private int[] CalculateOverallMaxColumnLength(int columnCount)
         {
-            for (var column = 0; column < _table.ColumnCount; column++)
+            var columnLengths = new int[columnCount];
+            var maxLength = GetOverallMaxLength();
+
+            for (var column = 0; column < columnLengths.Length; column++)
             {
-                _columnLengths[column] = GetColumnLength(column);
+                columnLengths[column] = maxLength;
             }
+
+            return columnLengths;
         }
 
-        private int GetElementLength(int row, int column)
+        private int[] CalculateColumnLength(int columnCount)
         {
-            return $"{_table[row, column]}".Count();
-        }
+            var columnLengths = new int[columnCount];
 
-        private int GetColumnLength(int column)
-        {
-            return _table.Settings.SameRowLength ? GetOverallMaxLength() : GetColumnMaxLength(column);
+            for (var column = 0; column < columnCount; column++)
+            {
+                columnLengths[column] = GetColumnMaxLength(column);
+            }
+
+            return columnLengths;
         }
 
         private int GetOverallMaxLength()
@@ -158,6 +160,11 @@ namespace ConsoleTable.Core.Drawer
             }
 
             return maxLength;
+        }
+
+        private int GetElementLength(int row, int column)
+        {
+            return $"{_table[row, column]}".Count();
         }
     }
 }
