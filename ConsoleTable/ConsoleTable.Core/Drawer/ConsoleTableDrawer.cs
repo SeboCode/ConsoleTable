@@ -11,10 +11,12 @@ namespace ConsoleTable.Core.Drawer
         private const string NewLine = "\r\n";
 
         private readonly IConsoleTable _table;
-        
+        private readonly int[] _columnLengths;
+
         public ConsoleTableDrawer(IConsoleTable table)
         {
             _table = table;
+            _columnLengths = new int[table.ColumnCount];
         }
 
         public void Write()
@@ -65,7 +67,6 @@ namespace ConsoleTable.Core.Drawer
 
                 data.Append(columnSeperator);
                 data.Append(NewLine);
-                //todo move out of for loop and iterate one time less
                 var verticalBorder = row == _table.RowCount - 1 ? VerticalBorder.Bottom : VerticalBorder.Between;
                 data.Append(GetRowSeparator(verticalBorder));
                 data.Append(NewLine);
@@ -94,20 +95,30 @@ namespace ConsoleTable.Core.Drawer
 
         private string GetRowSeparator(VerticalBorder verticalBorder)
         {
+            if (_columnLengths.FirstOrDefault() == 0)
+            {
+                CalculateColumnLength();
+            }
+
             var rowSeparator = new StringBuilder();
             rowSeparator.Append(_table.Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString());
-
-            //todo calculate columnlength and save it in an array, so it doesnt need to be calculated multiple times
-            for (var column = 0; column < _table.ColumnCount; column++)
+            
+            for (var column = 0; column < _columnLengths.Count(); column++)
             {
-                var columnLength = GetColumnLength(column);
-                rowSeparator.Append(new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, columnLength));
-                //todo move out of for loop and iterate one time less
+                rowSeparator.Append(new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, _columnLengths[column]));
                 var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
                 rowSeparator.Append(_table.Settings.GetBorderSymbol(horizontalBorder, verticalBorder));
             }
             
             return rowSeparator.ToString();
+        }
+
+        private void CalculateColumnLength()
+        {
+            for (var column = 0; column < _table.ColumnCount; column++)
+            {
+                _columnLengths[column] = GetColumnLength(column);
+            }
         }
 
         private int GetElementLength(int row, int column)
