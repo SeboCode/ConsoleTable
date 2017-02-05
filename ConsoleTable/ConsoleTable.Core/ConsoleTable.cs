@@ -5,7 +5,7 @@ using ConsoleTable.Settings;
 
 namespace ConsoleTable.Core
 {
-    public class ConsoleTable<T> : IConsoleTable<T>
+    public class ConsoleTable<T> : IConsoleTable<T>, IConsoleTable
     {
         private readonly T[,] _table;
 
@@ -29,6 +29,12 @@ namespace ConsoleTable.Core
 
                 _table[row, column] = value;
             }
+        }
+
+        object IConsoleTable.this[int row, int column]
+        {
+            get { return this[row, column]; }
+            set { this[row, column] = (T) value; }
         }
 
         private ConsoleTable(string title = null, string[] header = null)

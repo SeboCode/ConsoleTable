@@ -5,14 +5,13 @@ using ConsoleTable.Settings.Border;
 
 namespace ConsoleTable.Core.Drawer
 {
-    public class ConsoleTableDrawer<T> : IConsoleTableDrawer
+    public class ConsoleTableDrawer : IConsoleTableDrawer
     {
         private const string NewLine = "\r\n";
 
-        private readonly IConsoleTable<T> _table;
-
-        //todo second interface without generic
-        public ConsoleTableDrawer(IConsoleTable<T> table)
+        private readonly IConsoleTable _table;
+        
+        public ConsoleTableDrawer(IConsoleTable table)
         {
             _table = table;
         }

@@ -16,4 +16,19 @@ namespace ConsoleTable.Core
 
         int ColumnCount { get; }
     }
+
+    public interface IConsoleTable
+    {
+        object this[int row, int column] { get; set; }
+
+        ISettings Settings { get; set; }
+
+        string Title { get; set; }
+
+        string[] Header { get; set; }
+
+        int RowCount { get; }
+
+        int ColumnCount { get; }
+    }
 }

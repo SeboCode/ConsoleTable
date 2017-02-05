@@ -29,7 +29,7 @@ namespace ConsoleTable
                 Title = "Matrix"
             };
 
-            var table = new ConsoleTableDrawer<double>(data);
+            var table = new ConsoleTableDrawer(data);
             table.Write();
         }
 
@@ -44,7 +44,7 @@ namespace ConsoleTable
             };
 
             var data = new ConsoleTable<string>(values);
-            var table = new ConsoleTableDrawer<string>(data);
+            var table = new ConsoleTableDrawer(data);
             table.Write();
         }
 
@@ -66,7 +66,7 @@ namespace ConsoleTable
             }
 
             var data = new ConsoleTable<double>(values, "Table Title", new[] {"Column 1", "Column 2", "Column 3"});
-            var table = new ConsoleTableDrawer<double>(data);
+            var table = new ConsoleTableDrawer(data);
             table.Write();
         }
     }
