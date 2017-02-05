@@ -15,6 +15,11 @@ namespace ConsoleTable.Core.Drawer
 
         public ConsoleTableDrawer(IConsoleTable table)
         {
+            if (table == null)
+            {
+                throw new ArgumentNullException(nameof(table));
+            }
+
             _table = table;
         }
 
