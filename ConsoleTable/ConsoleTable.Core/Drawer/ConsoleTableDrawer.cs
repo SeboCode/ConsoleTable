@@ -65,9 +65,8 @@ namespace ConsoleTable.Core.Drawer
             {
                 for (var column = 0; column < _table.ColumnCount; column++)
                 {
-                    var columnLength = _columnLengths[column];
                     data.Append(columnSeperator);
-                    data.Append($"{_table[row, column]}".PadRight(columnLength));
+                    data.Append($"{_table[row, column]}".PadRight(_columnLengths[column]));
                 }
 
                 data.Append(columnSeperator);
@@ -85,10 +84,10 @@ namespace ConsoleTable.Core.Drawer
             var formatedHeader = new StringBuilder();
             var columnSeperator = _table.Settings.TableSymbols.VerticalTableFieldBorder;
 
-            for (var i = 0; i < _table.Header.Count(); i++)
+            for (var column = 0; column < _table.Header.Count(); column++)
             {
                 formatedHeader.Append(columnSeperator);
-                formatedHeader.Append(_table.Header[i].PadRight(_columnLengths[i]));
+                formatedHeader.Append(_table.Header[column].PadRight(_columnLengths[column]));
             }
 
             formatedHeader.Append(columnSeperator);
