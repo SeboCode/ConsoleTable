@@ -335,7 +335,7 @@ namespace ConsoleTable.Core.Test
             var header = new[] {"Header 1", "Header2"};
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(fillerElement, title, header, row1, row2);
+            var consoleTable = new ConsoleTable<string>(new[] {row1, row2}, title, header, fillerElement);
             Assert.AreEqual(title, consoleTable.Title);
             Assert.AreEqual(header.First(), consoleTable.Header.First());
             Assert.AreEqual(header.Last(), consoleTable.Header.Last());
@@ -356,7 +356,7 @@ namespace ConsoleTable.Core.Test
         [ExpectedException(typeof(ArgumentException))]
         public void Test_Create_Rows_First_Dimension_Empty()
         {
-            new ConsoleTable<string>(rows: new string[0][]);
+            new ConsoleTable<string>(new string[0][]);
         }
 
         [TestMethod]
@@ -364,7 +364,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new[] {"Row1"};
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(new[] { row1, row2 });
             Assert.IsNull(consoleTable[0, 1]);
             Assert.AreEqual(row1.First(), consoleTable[0, 0]);
             Assert.AreEqual(row2.First(), consoleTable[1, 0]);
@@ -376,7 +376,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[0];
             var row2 = new[] { "Hello", "World" };
-            var consoleTable = new ConsoleTable<string>(rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(new[] { row1, row2 });
             Assert.IsNull(consoleTable[0, 0]);
             Assert.IsNull(consoleTable[0, 1]);
             Assert.AreEqual(row2.First(), consoleTable[1, 0]);
@@ -388,7 +388,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[4];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(new[] { row1, row2 });
             Assert.IsNull(consoleTable[0, 0]);
             Assert.IsNull(consoleTable[0, 1]);
             Assert.AreEqual(row2.First(), consoleTable[1, 0]);
@@ -401,7 +401,7 @@ namespace ConsoleTable.Core.Test
             var biggest = 4;
             var row1 = new string[biggest];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(new[] { row1, row2 });
             Assert.AreEqual(biggest, consoleTable.ColumnCount);
         }
 
@@ -411,7 +411,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[0];
             var row2 = new string[0];
-            new ConsoleTable<string>(rows: new[] {row1, row2});
+            new ConsoleTable<string>(new[] { row1, row2 });
         }
 
         [TestMethod]
@@ -419,7 +419,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[3];
             var row2 = new string[6];
-            new ConsoleTable<string>(rows: new[] {row1, row2});
+            new ConsoleTable<string>(new[] { row1, row2 });
         }
 
         [TestMethod]
@@ -428,7 +428,7 @@ namespace ConsoleTable.Core.Test
             var biggest = 6;
             var row1 = new string[3];
             var row2 = new string[biggest];
-            var consoleTable = new ConsoleTable<string>(rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(new[] { row1, row2 });
             Assert.AreEqual(biggest, consoleTable.ColumnCount);
         }
 
@@ -438,7 +438,7 @@ namespace ConsoleTable.Core.Test
             var fillerElement = "filler";
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(fillerElement, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(fillerElement: fillerElement, rows: new[] { row1, row2 });
             Assert.AreEqual(fillerElement, consoleTable[0, 0]);
             Assert.AreEqual(fillerElement, consoleTable[0, 1]);
         }
@@ -448,7 +448,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(title: string.Empty, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(title: string.Empty, rows: new[] { row1, row2 });
             Assert.IsNull(consoleTable.Title);
         }
 
@@ -457,7 +457,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(title: "    ", rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(title: "    ", rows: new[] { row1, row2 });
             Assert.IsNull(consoleTable.Title);
         }
 
@@ -466,7 +466,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(title: "  \n  \t\t\n  \r ", rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(title: "  \n  \t\t\n  \r ", rows: new[] { row1, row2 });
             Assert.IsNull(consoleTable.Title);
         }
 
@@ -476,7 +476,7 @@ namespace ConsoleTable.Core.Test
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
             var header = new[] {string.Empty};
-            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] { row1, row2 });
             Assert.IsNull(consoleTable.Header.First());
         }
 
@@ -486,7 +486,7 @@ namespace ConsoleTable.Core.Test
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
             var header = new[] {"    "};
-            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] { row1, row2 });
             Assert.IsNull(consoleTable.Header.First());
         }
 
@@ -496,7 +496,7 @@ namespace ConsoleTable.Core.Test
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
             var header = new[] {"  \n  \t\t\n  \r "};
-            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] { row1, row2 });
             Assert.IsNull(consoleTable.Header.First());
         }
 
@@ -506,7 +506,7 @@ namespace ConsoleTable.Core.Test
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
             var header = new[] {"Test", string.Empty};
-            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] { row1, row2 });
             Assert.AreEqual(header.First(), consoleTable.Header.First());
             Assert.IsNull(consoleTable.Header.Last());
         }
@@ -517,7 +517,7 @@ namespace ConsoleTable.Core.Test
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
             var header = new[] {"Test", "    "};
-            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] { row1, row2 });
             Assert.AreEqual(header.First(), consoleTable.Header.First());
             Assert.IsNull(consoleTable.Header.Last());
         }
@@ -528,7 +528,7 @@ namespace ConsoleTable.Core.Test
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
             var header = new[] {"Test", "  \n  \t\t\n  \r "};
-            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(header: header, rows: new[] { row1, row2 });
             Assert.AreEqual(header.First(), consoleTable.Header.First());
             Assert.IsNull(consoleTable.Header.Last());
         }
@@ -538,7 +538,7 @@ namespace ConsoleTable.Core.Test
         {
             var row1 = new string[0];
             var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(rows: new[] {row1, row2});
+            var consoleTable = new ConsoleTable<string>(new[] { row1, row2 });
             Assert.IsNotNull(consoleTable.Settings);
         }
         #endregion

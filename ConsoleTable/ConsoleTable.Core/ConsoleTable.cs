@@ -86,9 +86,8 @@ namespace ConsoleTable.Core
 
             _table = new T[row, column];
         }
-
-        //todo use 2d array instead of params => move fillerelement to end
-        public ConsoleTable(T fillerElement = default(T), string title = null, string[] header = null, params T[][] rows) : this(title, header)
+        
+        public ConsoleTable(T[][] rows, string title = null, string[] header = null, T fillerElement = default(T)) : this(title, header)
         {
             if (rows == null)
             {
