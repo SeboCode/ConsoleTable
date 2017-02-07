@@ -9,7 +9,7 @@ namespace ConsoleTable.Settings
     {
         private readonly Dictionary<Borders, char> _borderAssignment;
         
-        public ConsoleTableSettings(ITableSymbols tableSymbols = null, bool sameRowLength = false)
+        public ConsoleTableSettings(TableSymbols tableSymbols = null, bool sameRowLength = false)
         {
             if (tableSymbols == null)
             {
@@ -23,8 +23,8 @@ namespace ConsoleTable.Settings
 
         public bool SameRowLength { get; set; }
 
-        private ITableSymbols _tableSymbols;
-        public ITableSymbols TableSymbols
+        private TableSymbols _tableSymbols;
+        public TableSymbols TableSymbols
         {
             get { return _tableSymbols; }
             set

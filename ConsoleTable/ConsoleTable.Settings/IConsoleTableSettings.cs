@@ -7,7 +7,7 @@ namespace ConsoleTable.Settings
     {
         bool SameRowLength { get; set; }
         
-        ITableSymbols TableSymbols { get; set; }
+        TableSymbols TableSymbols { get; set; }
 
         void ToDefault();
 

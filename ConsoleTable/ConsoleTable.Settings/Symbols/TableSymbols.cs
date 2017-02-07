@@ -1,6 +1,6 @@
 ﻿namespace ConsoleTable.Settings.Symbols
 {
-    public class TableSymbols : ITableSymbols
+    public class TableSymbols
     {
         public virtual char TopRightCorner { get; set; } = '┐';
         public virtual char TopLeftCorner { get; set; } = '┌';

@@ -43,7 +43,6 @@
     <Compile Include="IConsoleTableSettings.cs" />
     <Compile Include="Util\EnumUtil.cs" />
     <Compile Include="Border\HorizontalBorder.cs" />
-    <Compile Include="Symbols\ITableSymbols.cs" />
     <Compile Include="ConsoleTableSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Symbols\TableSymbols.cs" />
