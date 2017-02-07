@@ -70,12 +70,6 @@ namespace ConsoleTable.Settings
 
             private HorizontalBorder HorizontalBorder { get; }
             private VerticalBorder VerticalBorder { get; }
-
-            //todo remove
-            public override int GetHashCode()
-            {
-                return HorizontalBorder.GetHashCode() ^ VerticalBorder.GetHashCode();
-            }
         }
     }
 }
