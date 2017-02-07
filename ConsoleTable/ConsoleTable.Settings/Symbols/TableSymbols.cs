@@ -144,13 +144,13 @@ namespace ConsoleTable.Settings.Symbols
         {
             //todo redundant => remove
             _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Bottom)] = BottomLeftCorner;
-            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Between)] = LeftRowSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Center)] = LeftRowSeperator;
             _borderAssignment[new Borders(HorizontalBorder.Left, VerticalBorder.Top)] = TopLeftCorner;
-            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Bottom)] = BottomColumnSeperator;
-            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Between)] = TableFieldCorner;
-            _borderAssignment[new Borders(HorizontalBorder.Between, VerticalBorder.Top)] = TopColumnSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Center, VerticalBorder.Bottom)] = BottomColumnSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Center, VerticalBorder.Center)] = TableFieldCorner;
+            _borderAssignment[new Borders(HorizontalBorder.Center, VerticalBorder.Top)] = TopColumnSeperator;
             _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Bottom)] = BottomRightCorner;
-            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Between)] = RightRowSeperator;
+            _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Center)] = RightRowSeperator;
             _borderAssignment[new Borders(HorizontalBorder.Right, VerticalBorder.Top)] = TopRightCorner;
         }
 

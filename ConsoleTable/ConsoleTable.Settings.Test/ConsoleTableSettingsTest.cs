@@ -106,11 +106,11 @@ namespace ConsoleTable.Settings.Test
             Assert.AreEqual(settings.TableSymbols.TopLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Top));
             Assert.AreEqual(settings.TableSymbols.BottomRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Bottom));
             Assert.AreEqual(settings.TableSymbols.BottomLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Bottom));
-            Assert.AreEqual(settings.TableSymbols.RightRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Between));
-            Assert.AreEqual(settings.TableSymbols.LeftRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Between));
-            Assert.AreEqual(settings.TableSymbols.TopColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Between, VerticalBorder.Top));
-            Assert.AreEqual(settings.TableSymbols.BottomColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Between, VerticalBorder.Bottom));
-            Assert.AreEqual(settings.TableSymbols.TableFieldCorner, settings.GetBorderSymbol(HorizontalBorder.Between, VerticalBorder.Between));
+            Assert.AreEqual(settings.TableSymbols.RightRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Center));
+            Assert.AreEqual(settings.TableSymbols.LeftRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Center));
+            Assert.AreEqual(settings.TableSymbols.TopColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Top));
+            Assert.AreEqual(settings.TableSymbols.BottomColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Bottom));
+            Assert.AreEqual(settings.TableSymbols.TableFieldCorner, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Center));
         }
 
         [TestMethod]
@@ -150,11 +150,11 @@ namespace ConsoleTable.Settings.Test
             Assert.AreEqual(topLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Top));
             Assert.AreEqual(bottomRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Bottom));
             Assert.AreEqual(bottomLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Bottom));
-            Assert.AreEqual(rightRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Between));
-            Assert.AreEqual(leftRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Between));
-            Assert.AreEqual(topColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Between, VerticalBorder.Top));
-            Assert.AreEqual(bottomColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Between, VerticalBorder.Bottom));
-            Assert.AreEqual(tableFieldCorner, settings.GetBorderSymbol(HorizontalBorder.Between, VerticalBorder.Between));
+            Assert.AreEqual(rightRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Center));
+            Assert.AreEqual(leftRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Center));
+            Assert.AreEqual(topColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Top));
+            Assert.AreEqual(bottomColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Bottom));
+            Assert.AreEqual(tableFieldCorner, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Center));
         }
     }
 }

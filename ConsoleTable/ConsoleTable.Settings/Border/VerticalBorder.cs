@@ -3,7 +3,7 @@
     public enum VerticalBorder
     {
         Top,
-        Between,
+        Center,
         Bottom
     }
 }

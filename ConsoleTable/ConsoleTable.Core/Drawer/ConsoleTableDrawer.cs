@@ -71,7 +71,7 @@ namespace ConsoleTable.Core.Drawer
 
                 data.Append(columnSeperator);
                 data.Append(NewLine);
-                var verticalBorder = row == _table.RowCount - 1 ? VerticalBorder.Bottom : VerticalBorder.Between;
+                var verticalBorder = row == _table.RowCount - 1 ? VerticalBorder.Bottom : VerticalBorder.Center;
                 data.Append(GetRowSeparator(verticalBorder));
                 data.Append(NewLine);
             }
@@ -92,7 +92,7 @@ namespace ConsoleTable.Core.Drawer
 
             formatedHeader.Append(columnSeperator);
             formatedHeader.Append(NewLine);
-            formatedHeader.Append(GetRowSeparator(VerticalBorder.Between));
+            formatedHeader.Append(GetRowSeparator(VerticalBorder.Center));
             formatedHeader.Append(NewLine);
             return formatedHeader.ToString();
         }
@@ -105,7 +105,7 @@ namespace ConsoleTable.Core.Drawer
             for (var column = 0; column < _columnLengths.Count(); column++)
             {
                 rowSeparator.Append(new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, _columnLengths[column]));
-                var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Between;
+                var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Center;
                 rowSeparator.Append(_table.Settings.GetBorderSymbol(horizontalBorder, verticalBorder));
             }
             
