@@ -3,7 +3,7 @@ using ConsoleTable.Settings.Symbols;
 
 namespace ConsoleTable.Settings
 {
-    public interface ISettings
+    public interface IConsoleTableSettings
     {
         bool SameRowLength { get; set; }
         

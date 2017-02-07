@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ConsoleTable.Settings.Test
 {
     [TestClass]
-    public class SettingsTest
+    public class ConsoleTableSettingsTest
     {
         [TestMethod]
         public void Test_Create_Valid()
@@ -37,7 +37,7 @@ namespace ConsoleTable.Settings.Test
                 VerticalTableFieldBorder = verticalTableFieldBorder
             };
 
-            var settings = new Settings(tableSymbols, true);
+            var settings = new ConsoleTableSettings(tableSymbols, true);
             Assert.AreEqual(tableSymbols, settings.TableSymbols);
             Assert.AreEqual(topRightCorner, settings.TableSymbols.TopRightCorner);
             Assert.AreEqual(topLeftCorner, settings.TableSymbols.TopLeftCorner);
@@ -56,7 +56,7 @@ namespace ConsoleTable.Settings.Test
         [TestMethod]
         public void Test_Create_Default_Values()
         {
-            var settings = new Settings();
+            var settings = new ConsoleTableSettings();
             Assert.IsNotNull(settings.TableSymbols);
             Assert.IsFalse(settings.SameRowLength);
         }
@@ -79,7 +79,7 @@ namespace ConsoleTable.Settings.Test
                 VerticalTableFieldBorder = 'k'
             };
 
-            var settings = new Settings(tableSymbols, true);
+            var settings = new ConsoleTableSettings(tableSymbols, true);
             settings.ToDefault();
             var defaultTableSymbols = new TableSymbols();
             
@@ -101,7 +101,7 @@ namespace ConsoleTable.Settings.Test
         [TestMethod]
         public void Test_GetBorderSymbol_Default()
         {
-            var settings = new Settings();
+            var settings = new ConsoleTableSettings();
             Assert.AreEqual(settings.TableSymbols.TopRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Top));
             Assert.AreEqual(settings.TableSymbols.TopLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Top));
             Assert.AreEqual(settings.TableSymbols.BottomRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Bottom));
@@ -143,7 +143,7 @@ namespace ConsoleTable.Settings.Test
                 VerticalTableFieldBorder = verticalTableFieldBorder
             };
 
-            var settings = new Settings();
+            var settings = new ConsoleTableSettings();
             settings.TableSymbols = tableSymbols;
             Assert.AreEqual(tableSymbols, settings.TableSymbols);
             Assert.AreEqual(topRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Top));

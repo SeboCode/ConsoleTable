@@ -58,7 +58,7 @@ namespace ConsoleTable.Core
 
             Title = title;
             Header = header;
-            Settings = new Settings.Settings();
+            Settings = new ConsoleTableSettings();
         }
 
         //overwork in c# 7
@@ -119,7 +119,7 @@ namespace ConsoleTable.Core
             FillTable(rows, fillerElement, biggestColumn);
         }
 
-        public ISettings Settings { get; set; }
+        public IConsoleTableSettings Settings { get; set; }
 
         public string Title { get; set; }
 

@@ -5,12 +5,11 @@ using ConsoleTable.Settings.Util;
 
 namespace ConsoleTable.Settings
 {
-    public class Settings : ISettings
+    public class ConsoleTableSettings : IConsoleTableSettings
     {
         private readonly Dictionary<Borders, char> _borderAssignment;
-
-        //todo rename => consoletablesettings
-        public Settings(ITableSymbols tableSymbols = null, bool sameRowLength = false)
+        
+        public ConsoleTableSettings(ITableSymbols tableSymbols = null, bool sameRowLength = false)
         {
             if (tableSymbols == null)
             {

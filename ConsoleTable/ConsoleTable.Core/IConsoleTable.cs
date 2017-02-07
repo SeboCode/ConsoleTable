@@ -6,7 +6,7 @@ namespace ConsoleTable.Core
     {
         T this[int row, int column] { get; set; }
 
-        ISettings Settings { get; set; }
+        IConsoleTableSettings Settings { get; set; }
 
         string Title { get; set; }
 
@@ -21,7 +21,7 @@ namespace ConsoleTable.Core
     {
         object this[int row, int column] { get; set; }
 
-        ISettings Settings { get; set; }
+        IConsoleTableSettings Settings { get; set; }
 
         string Title { get; set; }
 
