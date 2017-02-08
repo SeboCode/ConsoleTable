@@ -137,7 +137,47 @@ namespace ConsoleTable.Settings.Symbols
 
         public char GetBorderSymbol(HorizontalBorder horizontalBorder, VerticalBorder verticalBorder)
         {
-            return _borderAssignment[new Borders(horizontalBorder, verticalBorder)];
+            if (horizontalBorder == HorizontalBorder.Left && verticalBorder == VerticalBorder.Top)
+            {
+                return TopLeftCorner;
+            }
+
+            if (horizontalBorder == HorizontalBorder.Left && verticalBorder == VerticalBorder.Center)
+            {
+                return LeftRowSeperator;
+            }
+
+            if (horizontalBorder == HorizontalBorder.Left && verticalBorder == VerticalBorder.Bottom)
+            {
+                return BottomLeftCorner;
+            }
+
+            if (horizontalBorder == HorizontalBorder.Center && verticalBorder == VerticalBorder.Top)
+            {
+                return TopColumnSeperator;
+            }
+
+            if (horizontalBorder == HorizontalBorder.Center && verticalBorder == VerticalBorder.Center)
+            {
+                return TableFieldCorner;
+            }
+
+            if (horizontalBorder == HorizontalBorder.Center && verticalBorder == VerticalBorder.Bottom)
+            {
+                return BottomColumnSeperator;
+            }
+
+            if (horizontalBorder == HorizontalBorder.Right && verticalBorder == VerticalBorder.Top)
+            {
+                return TopRightCorner;
+            }
+
+            if (horizontalBorder == HorizontalBorder.Right && verticalBorder == VerticalBorder.Center)
+            {
+                return RightRowSeperator;
+            }
+
+            return BottomRightCorner;
         }
         
         private void AssignBorders()
