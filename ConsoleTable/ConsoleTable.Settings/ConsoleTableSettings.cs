@@ -18,15 +18,7 @@ namespace ConsoleTable.Settings
 
         public bool SameRowLength { get; set; }
 
-        private TableSymbols _tableSymbols;
-        public TableSymbols TableSymbols
-        {
-            get { return _tableSymbols; }
-            set
-            {
-                _tableSymbols = value;
-            }
-        }
+        public TableSymbols TableSymbols { get; set; }
 
         public void ToDefault()
         {

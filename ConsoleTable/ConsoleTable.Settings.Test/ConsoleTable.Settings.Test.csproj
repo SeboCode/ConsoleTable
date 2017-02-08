@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConsoleTableSettingsTest.cs" />
+    <Compile Include="Symbols\TableSymbolsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConsoleTable.Settings\ConsoleTable.Settings.csproj">

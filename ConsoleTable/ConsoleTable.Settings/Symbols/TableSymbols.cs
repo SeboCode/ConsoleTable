@@ -26,7 +26,7 @@ namespace ConsoleTable.Settings.Symbols
 
         public virtual char VerticalTableFieldBorder { get; set; } = '│';
 
-        public char GetBorderSymbol(HorizontalBorder horizontalBorder, VerticalBorder verticalBorder)
+        public virtual char GetBorderSymbol(HorizontalBorder horizontalBorder, VerticalBorder verticalBorder)
         {
             if (horizontalBorder == HorizontalBorder.Left && verticalBorder == VerticalBorder.Top)
             {

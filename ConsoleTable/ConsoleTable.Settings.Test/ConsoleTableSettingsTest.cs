@@ -1,5 +1,4 @@
-﻿using ConsoleTable.Settings.Border;
-using ConsoleTable.Settings.Symbols;
+﻿using ConsoleTable.Settings.Symbols;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ConsoleTable.Settings.Test
@@ -62,6 +61,37 @@ namespace ConsoleTable.Settings.Test
         }
 
         [TestMethod]
+        public void Test_SameRowLength()
+        {
+            var settingsTrue = new ConsoleTableSettings { SameRowLength = true };
+            var settingsFalse = new ConsoleTableSettings { SameRowLength = false };
+            Assert.IsTrue(settingsTrue.SameRowLength);
+            Assert.IsFalse(settingsFalse.SameRowLength);
+        }
+
+        [TestMethod]
+        public void Test_TableSymbols()
+        {
+            var tableSymbols = new TableSymbols
+            {
+                TopRightCorner = 'a',
+                TopLeftCorner = 'b',
+                BottomRightCorner = 'c',
+                BottomLeftCorner = 'd',
+                RightRowSeperator = 'e',
+                LeftRowSeperator = 'f',
+                TopColumnSeperator = 'g',
+                BottomColumnSeperator = 'h',
+                TableFieldCorner = 'i',
+                HorizontalTableFieldBorder = 'j',
+                VerticalTableFieldBorder = 'k'
+            };
+
+            var settings = new ConsoleTableSettings { TableSymbols = tableSymbols };
+            Assert.AreEqual(tableSymbols, settings.TableSymbols);
+        }
+
+        [TestMethod]
         public void Test_ToDefault()
         {
             var tableSymbols = new TableSymbols
@@ -96,65 +126,6 @@ namespace ConsoleTable.Settings.Test
             Assert.AreEqual(defaultTableSymbols.HorizontalTableFieldBorder, settings.TableSymbols.HorizontalTableFieldBorder);
             Assert.AreEqual(defaultTableSymbols.VerticalTableFieldBorder, settings.TableSymbols.VerticalTableFieldBorder);
             Assert.IsFalse(settings.SameRowLength);
-        }
-
-        [TestMethod]
-        public void Test_GetBorderSymbol_Default()
-        {
-            var settings = new ConsoleTableSettings();
-            Assert.AreEqual(settings.TableSymbols.TopRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Top));
-            Assert.AreEqual(settings.TableSymbols.TopLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Top));
-            Assert.AreEqual(settings.TableSymbols.BottomRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Bottom));
-            Assert.AreEqual(settings.TableSymbols.BottomLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Bottom));
-            Assert.AreEqual(settings.TableSymbols.RightRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Center));
-            Assert.AreEqual(settings.TableSymbols.LeftRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Center));
-            Assert.AreEqual(settings.TableSymbols.TopColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Top));
-            Assert.AreEqual(settings.TableSymbols.BottomColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Bottom));
-            Assert.AreEqual(settings.TableSymbols.TableFieldCorner, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Center));
-        }
-
-        [TestMethod]
-        public void Test_GetBorderSymbol_Custom_TableSymbols()
-        {
-            var topRightCorner = 'a';
-            var topLeftCorner = 'b';
-            var bottomRightCorner = 'c';
-            var bottomLeftCorner = 'd';
-            var rightRowSeperator = 'e';
-            var leftRowSeperator = 'f';
-            var topColumnSeperator = 'g';
-            var bottomColumnSeperator = 'h';
-            var tableFieldCorner = 'i';
-            var horizontalTableFieldBorder = 'j';
-            var verticalTableFieldBorder = 'k';
-
-            var tableSymbols = new TableSymbols
-            {
-                TopRightCorner = topRightCorner,
-                TopLeftCorner = topLeftCorner,
-                BottomRightCorner = bottomRightCorner,
-                BottomLeftCorner = bottomLeftCorner,
-                RightRowSeperator = rightRowSeperator,
-                LeftRowSeperator = leftRowSeperator,
-                TopColumnSeperator = topColumnSeperator,
-                BottomColumnSeperator = bottomColumnSeperator,
-                TableFieldCorner = tableFieldCorner,
-                HorizontalTableFieldBorder = horizontalTableFieldBorder,
-                VerticalTableFieldBorder = verticalTableFieldBorder
-            };
-
-            var settings = new ConsoleTableSettings();
-            settings.TableSymbols = tableSymbols;
-            Assert.AreEqual(tableSymbols, settings.TableSymbols);
-            Assert.AreEqual(topRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Top));
-            Assert.AreEqual(topLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Top));
-            Assert.AreEqual(bottomRightCorner, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Bottom));
-            Assert.AreEqual(bottomLeftCorner, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Bottom));
-            Assert.AreEqual(rightRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Right, VerticalBorder.Center));
-            Assert.AreEqual(leftRowSeperator, settings.GetBorderSymbol(HorizontalBorder.Left, VerticalBorder.Center));
-            Assert.AreEqual(topColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Top));
-            Assert.AreEqual(bottomColumnSeperator, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Bottom));
-            Assert.AreEqual(tableFieldCorner, settings.GetBorderSymbol(HorizontalBorder.Center, VerticalBorder.Center));
         }
     }
 }
