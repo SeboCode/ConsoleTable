@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IConsoleTableSettings.cs" />
-    <Compile Include="Util\EnumUtil.cs" />
     <Compile Include="Border\HorizontalBorder.cs" />
     <Compile Include="ConsoleTableSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,5 +1,4 @@
-﻿using ConsoleTable.Settings.Border;
-using ConsoleTable.Settings.Symbols;
+﻿using ConsoleTable.Settings.Symbols;
 
 namespace ConsoleTable.Settings
 {
@@ -24,11 +23,6 @@ namespace ConsoleTable.Settings
         {
             SameRowLength = false;
             TableSymbols = new TableSymbols();
-        }
-        
-        public char GetBorderSymbol(HorizontalBorder horizontalBorder, VerticalBorder verticalBorder)
-        {
-            return TableSymbols.GetBorderSymbol(horizontalBorder, verticalBorder);
         }
     }
 }

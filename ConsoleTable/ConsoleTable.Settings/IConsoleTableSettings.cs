@@ -1,5 +1,4 @@
-﻿using ConsoleTable.Settings.Border;
-using ConsoleTable.Settings.Symbols;
+﻿using ConsoleTable.Settings.Symbols;
 
 namespace ConsoleTable.Settings
 {
@@ -10,7 +9,5 @@ namespace ConsoleTable.Settings
         TableSymbols TableSymbols { get; set; }
 
         void ToDefault();
-
-        char GetBorderSymbol(HorizontalBorder horizontalBorder, VerticalBorder verticalBorder);
     }
 }

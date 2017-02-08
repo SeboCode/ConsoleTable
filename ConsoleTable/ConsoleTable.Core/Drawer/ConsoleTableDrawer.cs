@@ -100,13 +100,13 @@ namespace ConsoleTable.Core.Drawer
         private string GetRowSeparator(VerticalBorder verticalBorder)
         {
             var rowSeparator = new StringBuilder();
-            rowSeparator.Append(_table.Settings.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString());
+            rowSeparator.Append(_table.Settings.TableSymbols.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString());
             
             for (var column = 0; column < _columnLengths.Count(); column++)
             {
                 rowSeparator.Append(new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, _columnLengths[column]));
                 var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Center;
-                rowSeparator.Append(_table.Settings.GetBorderSymbol(horizontalBorder, verticalBorder));
+                rowSeparator.Append(_table.Settings.TableSymbols.GetBorderSymbol(horizontalBorder, verticalBorder));
             }
             
             return rowSeparator.ToString();
