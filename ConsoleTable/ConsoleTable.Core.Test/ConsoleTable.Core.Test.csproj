@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ConsoleTableDataTest.cs" />
+    <Compile Include="Drawer\ConsoleTableDrawerTest.cs" />
     <Compile Include="Extensions\StringExtensionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

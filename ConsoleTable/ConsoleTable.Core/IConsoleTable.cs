@@ -1,12 +1,8 @@
-﻿using ConsoleTable.Settings;
-
-namespace ConsoleTable.Core
+﻿namespace ConsoleTable.Core
 {
     public interface IConsoleTable<T>
     {
         T this[int row, int column] { get; set; }
-
-        IConsoleTableSettings Settings { get; set; }
 
         string Title { get; set; }
 
@@ -20,8 +16,6 @@ namespace ConsoleTable.Core
     public interface IConsoleTable
     {
         object this[int row, int column] { get; set; }
-
-        IConsoleTableSettings Settings { get; set; }
 
         string Title { get; set; }
 

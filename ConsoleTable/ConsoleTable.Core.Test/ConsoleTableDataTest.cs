@@ -207,13 +207,6 @@ namespace ConsoleTable.Core.Test
             Assert.AreEqual(header.First(), consoleTable.Header.First());
             Assert.IsNull(consoleTable.Header.Last());
         }
-
-        [TestMethod]
-        public void Test_Create_Table_Settings_Not_Null()
-        {
-            var consoleTable = new ConsoleTable<string>(new string[1, 1]);
-            Assert.IsNotNull(consoleTable.Settings);
-        }
         #endregion
 
         #region Tests for row-column-constructor
@@ -316,13 +309,6 @@ namespace ConsoleTable.Core.Test
             var consoleTable = new ConsoleTable<string>(1, 1, header: header);
             Assert.AreEqual(header.First(), consoleTable.Header.First());
             Assert.IsNull(consoleTable.Header.Last());
-        }
-
-        [TestMethod]
-        public void Test_Create_RowColumn_Settings_Not_Null()
-        {
-            var consoleTable = new ConsoleTable<string>(1, 1);
-            Assert.IsNotNull(consoleTable.Settings);
         }
         #endregion
 
@@ -531,15 +517,6 @@ namespace ConsoleTable.Core.Test
             var consoleTable = new ConsoleTable<string>(header: header, rows: new[] { row1, row2 });
             Assert.AreEqual(header.First(), consoleTable.Header.First());
             Assert.IsNull(consoleTable.Header.Last());
-        }
-
-        [TestMethod]
-        public void Test_Create_Rows_Settings_Not_Null()
-        {
-            var row1 = new string[0];
-            var row2 = new[] {"Hello", "World"};
-            var consoleTable = new ConsoleTable<string>(new[] { row1, row2 });
-            Assert.IsNotNull(consoleTable.Settings);
         }
         #endregion
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using ConsoleTable.Core.Extensions;
-using ConsoleTable.Settings;
 
 namespace ConsoleTable.Core
 {
@@ -63,7 +62,6 @@ namespace ConsoleTable.Core
 
             Title = title;
             Header = header;
-            Settings = new ConsoleTableSettings();
         }
 
         //overwork in c# 7
@@ -124,17 +122,7 @@ namespace ConsoleTable.Core
                 throw new ArgumentException(nameof(rows));
             }
 
-            var hasAny = false;
-
-            foreach (var row in rows)
-            {
-                if (row.Any())
-                {
-                    hasAny = true;
-                }
-            }
-
-            if (!hasAny)
+            if (!rows.Any(row => row.Any()))
             {
                 throw new ArgumentException(nameof(rows));
             }
@@ -143,13 +131,6 @@ namespace ConsoleTable.Core
             _table = new T[rows.Count(), biggestColumn];
             FillTable(rows, fillerElement, biggestColumn);
         }
-
-        //todo maybe move to drawer
-        /// <summary>
-        /// The Settings property gives information about how to draw the table.
-        /// </summary>
-        /// <value>The Settings property gets/sets the value of the settings object.</value>
-        public IConsoleTableSettings Settings { get; set; }
 
         /// <summary>
         /// The Title property represents the title of the table.

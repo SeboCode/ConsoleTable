@@ -25,11 +25,14 @@ namespace ConsoleTable
 
             var data = new ConsoleTable<double>(matrix)
             {
-                Settings = {TableSymbols = new MatrixTableSymbols()},
                 Title = "Matrix"
             };
 
-            var table = new ConsoleTableDrawer(data);
+            var table = new ConsoleTableDrawer(data)
+            {
+                Settings = {TableSymbols = new MatrixTableSymbols()}
+            };
+
             table.Write();
         }
 

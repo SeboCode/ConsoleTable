@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using ConsoleTable.Core.Extensions;
+using ConsoleTable.Settings;
 using ConsoleTable.Settings.Border;
 
 namespace ConsoleTable.Core.Drawer
@@ -13,7 +14,7 @@ namespace ConsoleTable.Core.Drawer
         private readonly IConsoleTable _table;
         private int[] _columnLengths;
 
-        public ConsoleTableDrawer(IConsoleTable table)
+        public ConsoleTableDrawer(IConsoleTable table, IConsoleTableSettings settings = null)
         {
             if (table == null)
             {
@@ -21,7 +22,14 @@ namespace ConsoleTable.Core.Drawer
             }
 
             _table = table;
+            Settings = settings ?? new ConsoleTableSettings();
         }
+
+        /// <summary>
+        /// The Settings property gives information about how to draw the table.
+        /// </summary>
+        /// <value>The Settings property gets/sets the value of the settings object.</value>
+        public IConsoleTableSettings Settings { get; set; }
 
         public void Write()
         {
@@ -35,7 +43,7 @@ namespace ConsoleTable.Core.Drawer
 
         private string GetFormatedTable()
         {
-            _columnLengths = _table.Settings.SameRowLength ? CalculateOverallMaxColumnLength(_table.ColumnCount) : CalculateColumnLength(_table.ColumnCount);
+            _columnLengths = Settings.SameRowLength ? CalculateOverallMaxColumnLength(_table.ColumnCount) : CalculateColumnLength(_table.ColumnCount);
             var output = new StringBuilder();
 
             if (!_table.Title.IsNullOrEmptyOrWhiteSpace())
@@ -59,7 +67,7 @@ namespace ConsoleTable.Core.Drawer
         private string GetFormatedData()
         {
             var data = new StringBuilder();
-            var columnSeperator = _table.Settings.TableSymbols.VerticalTableFieldBorder;
+            var columnSeperator = Settings.TableSymbols.VerticalTableFieldBorder;
 
             for (var row = 0; row < _table.RowCount; row++)
             {
@@ -82,7 +90,7 @@ namespace ConsoleTable.Core.Drawer
         private string GetFormatedHeader()
         {
             var formatedHeader = new StringBuilder();
-            var columnSeperator = _table.Settings.TableSymbols.VerticalTableFieldBorder;
+            var columnSeperator = Settings.TableSymbols.VerticalTableFieldBorder;
 
             for (var column = 0; column < _table.Header.Count(); column++)
             {
@@ -100,13 +108,13 @@ namespace ConsoleTable.Core.Drawer
         private string GetRowSeparator(VerticalBorder verticalBorder)
         {
             var rowSeparator = new StringBuilder();
-            rowSeparator.Append(_table.Settings.TableSymbols.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString());
+            rowSeparator.Append(Settings.TableSymbols.GetBorderSymbol(HorizontalBorder.Left, verticalBorder).ToString());
             
             for (var column = 0; column < _columnLengths.Count(); column++)
             {
-                rowSeparator.Append(new string(_table.Settings.TableSymbols.HorizontalTableFieldBorder, _columnLengths[column]));
+                rowSeparator.Append(new string(Settings.TableSymbols.HorizontalTableFieldBorder, _columnLengths[column]));
                 var horizontalBorder = column == _table.ColumnCount - 1 ? HorizontalBorder.Right : HorizontalBorder.Center;
-                rowSeparator.Append(_table.Settings.TableSymbols.GetBorderSymbol(horizontalBorder, verticalBorder));
+                rowSeparator.Append(Settings.TableSymbols.GetBorderSymbol(horizontalBorder, verticalBorder));
             }
             
             return rowSeparator.ToString();
