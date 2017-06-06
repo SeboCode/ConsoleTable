@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ConsoleTable.Core.Test
 {
     [TestClass]
-    public class ConsoleTableDataTest
+    public class ConsoleTableTest
     {
         [TestMethod]
         public void Test_Get_Value_Valid()
